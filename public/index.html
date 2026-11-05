@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillo MEI · Resolva Agora</title>
+<meta name="description" content="Resolva as pendências do seu MEI com a Stillo Gestão Contábil: declaração anual, débitos, parcelamento, diagnóstico do CNPJ e migração para ME.">
+<meta name="theme-color" content="#1c3354">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: app mobile-first, coluna única até 720px; painel Stillo usa largura total em telas grandes. */
+:root{
+  /* Paleta do logo Stillo: azul-marinho #1C3354 e dourado #A88A51 */
+  --bg:#f4f5f8; --surface:#ffffff; --ink:#14243d; --muted:#5b6678; --line:#dde2ea;
+  --brand:#1c3354; --brand-soft:#e8edf5; --brand-ink:#ffffff; --link:#24477a;
+  --gold:#a88a51; --gold-strong:#856a37; --gold-soft:#f6f0e3;
+  --top-bg:#1c3354; --top-ink:#ffffff;
+  --ok:#157a4f; --ok-soft:#e3f4ec; --warn:#9a6200; --warn-soft:#fdf2dc; --bad:#b4342a; --bad-soft:#fbe7e5; --info:#24477a; --info-soft:#e8edf5;
+  --f-display:"Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --r:14px; --shadow:0 1px 2px rgba(20,36,61,.06), 0 4px 16px rgba(20,36,61,.06);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-tema="claro"]){
+    --bg:#0c1524; --surface:#13203a; --ink:#ecf0f6; --muted:#9ba7bb; --line:#243552;
+    --brand:#d1b679; --brand-soft:#1d2d4a; --brand-ink:#14243d; --link:#dcc48e;
+    --gold:#d1b679; --gold-strong:#dcc48e; --gold-soft:#2a2619;
+    --top-bg:#0a1220; --top-ink:#ecf0f6;
+    --ok:#4cc68f; --ok-soft:#10301f; --warn:#e8b04a; --warn-soft:#33270c; --bad:#f07a6f; --bad-soft:#3a1714; --info:#8fb0e3; --info-soft:#1a2b48;
+    --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]:not([data-tema="claro"]), :root[data-tema="escuro"]{
+    --bg:#0c1524; --surface:#13203a; --ink:#ecf0f6; --muted:#9ba7bb; --line:#243552;
+    --brand:#d1b679; --brand-soft:#1d2d4a; --brand-ink:#14243d; --link:#dcc48e;
+    --gold:#d1b679; --gold-strong:#dcc48e; --gold-soft:#2a2619;
+    --top-bg:#0a1220; --top-ink:#ecf0f6;
+    --ok:#4cc68f; --ok-soft:#10301f; --warn:#e8b04a; --warn-soft:#33270c; --bad:#f07a6f; --bad-soft:#3a1714; --info:#8fb0e3; --info-soft:#1a2b48;
+    --shadow:0 1px 2px rgba(0,0,0,.35); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+body{min-height:100%;padding-bottom:84px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:1.6rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
+p{margin:0}
+a{color:var(--link)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.wrap.wide{max-width:1180px}
+.top{position:sticky;top:0;z-index:20;background:var(--top-bg);color:var(--top-ink);border-bottom:2px solid var(--gold)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:1.05rem;cursor:pointer;background:none;border:0;padding:0;color:var(--top-ink);text-align:left}
+.brand-mark{width:38px;height:38px;border-radius:50%;display:block}
+.brand small{display:block;font-family:var(--f-body);font-weight:500;font-size:.7rem;color:var(--gold);letter-spacing:.04em;text-transform:uppercase}
+.topbtn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border-radius:10px;border:1px solid var(--gold);background:transparent;color:var(--top-ink);font-weight:600;font-size:.86rem;cursor:pointer}
+.topbtn.icon{width:38px;padding:0;justify-content:center}
+.topbtn svg{color:var(--gold)}
+.spacer{flex:1}
+.banner{background:var(--warn-soft);color:var(--warn);font-size:.82rem;padding:8px 16px;text-align:center}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.section{padding:20px 0}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.card.flat{box-shadow:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid transparent;background:var(--brand);color:var(--brand-ink);font-weight:700;cursor:pointer;text-decoration:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--link);border-color:var(--line)}
+.btn.soft{background:var(--brand-soft);color:var(--link)}
+.filebtn{position:relative;overflow:hidden;align-self:flex-start}
+.filebtn input[type=file]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0}
+.filebtn:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.drop.over{border-color:var(--gold);background:var(--gold-soft)}
+.btn.danger{background:var(--bad-soft);color:var(--bad)}
+.btn.sm{min-height:38px;padding:0 14px;font-size:.88rem;border-radius:10px}
+.btn.block{width:100%}
+.link{background:none;border:0;color:var(--link);font-weight:600;cursor:pointer;padding:0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.t-neutral{background:var(--line);color:var(--muted)}
+.t-info{background:var(--info-soft);color:var(--info)}
+.t-warn{background:var(--warn-soft);color:var(--warn)}
+.t-ok{background:var(--ok-soft);color:var(--ok)}
+.t-bad{background:var(--bad-soft);color:var(--bad)}
+.modules{display:flex;gap:8px;overflow-x:auto;padding:14px 0 4px}
+.mod{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:.9rem;cursor:pointer}
+.mod.on{background:var(--brand);color:var(--brand-ink);border-color:var(--gold)}
+.mod .chip{padding:1px 8px}
+.hero{padding:18px 0 6px}
+.hero h1{font-size:1.75rem}
+.hero h1::after{content:"";display:block;width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold),#d4c07e);margin-top:12px}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 14px;min-height:50px}
+.search input{border:0;background:transparent;flex:1;min-height:48px;outline:none}
+.cat-title{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-strong);margin:6px 0 -6px}
+.svc{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;text-align:left;width:100%;cursor:pointer}
+.svc .ico{width:44px;height:44px;border-radius:12px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+.svc .price{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.svc h3{font-size:1rem}
+.svc-list{display:flex;flex-direction:column;gap:10px}
+.soon{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.soon .card{opacity:.85}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--muted);font-weight:600;cursor:pointer;padding:14px 0 0}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fact{background:var(--brand-soft);border-radius:12px;padding:12px}
+.fact b{display:block;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.fact span{font-size:.8rem;color:var(--muted)}
+ul.check{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+ul.check li{display:grid;grid-template-columns:20px 1fr;gap:8px}
+ul.check li::before{content:"";width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--ok-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' stroke='%23157a4f' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.sticky-cta{position:fixed;left:0;right:0;bottom:64px;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px;z-index:15}
+.sticky-cta .wrap{display:flex;gap:12px;align-items:center;padding:0}
+.steps{display:flex;gap:6px;margin:14px 0 4px}
+.steps i{flex:1;height:5px;border-radius:4px;background:var(--line)}
+.steps i.on{background:var(--gold)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.field .lbl{font-weight:600}
+.field .help{font-size:.84rem;color:var(--muted)}
+.field .err{font-size:.84rem;color:var(--bad);font-weight:600}
+.req{color:var(--bad)}
+.input,select.input,textarea.input{width:100%;min-height:48px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+textarea.input{min-height:96px;resize:vertical}
+.input.bad{border-color:var(--bad)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--surface)}
+.opt input{margin-top:4px;accent-color:var(--gold);width:18px;height:18px}
+.opt:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}
+.alert{border-radius:12px;padding:12px 14px;font-size:.92rem;display:flex;flex-direction:column;gap:4px}
+.alert.warn{background:var(--warn-soft);color:var(--warn)}
+.alert.info{background:var(--info-soft);color:var(--info)}
+.alert.bad{background:var(--bad-soft);color:var(--bad)}
+.alert.ok{background:var(--ok-soft);color:var(--ok)}
+.alert p{color:var(--ink)}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.file{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg);border-radius:10px;font-size:.9rem}
+.file a,.file .link{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.pixqr{width:220px;height:220px;background:#fff;border-radius:10px;padding:8px;display:grid;place-items:center}
+.pixqr svg,.pixqr img{width:100%;height:100%}
+.otp{letter-spacing:.5em;font-size:1.4rem;text-align:center;font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:minmax(120px,40%) 1fr;gap:8px 14px;font-size:.92rem}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600;word-break:break-word}
+.order{display:flex;flex-direction:column;gap:8px;cursor:pointer;text-align:left;width:100%}
+.order .row{justify-content:space-between}
+.track{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:6px}
+.track div{display:flex;flex-direction:column;gap:6px;font-size:.7rem;color:var(--muted);text-align:center}
+.track div::before{content:"";height:6px;border-radius:4px;background:var(--line)}
+.track div.on{color:var(--ink);font-weight:600}
+.track div.on::before{background:var(--gold)}
+.timeline{display:flex;flex-direction:column;gap:12px;border-left:2px solid var(--line);padding-left:14px;margin-left:6px}
+.timeline div{position:relative;font-size:.9rem}
+.timeline div::before{content:"";position:absolute;left:-21px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.msgs{display:flex;flex-direction:column;gap:8px}
+.msg{max-width:85%;padding:10px 12px;border-radius:12px;font-size:.92rem}
+.msg.me{align-self:flex-end;background:var(--brand);color:var(--brand-ink)}
+.msg.them{align-self:flex-start;background:var(--bg);border:1px solid var(--line)}
+.msg small{display:block;opacity:.75;font-size:.72rem;margin-top:2px}
+.nav{position:fixed;left:0;right:0;bottom:0;height:64px;background:var(--surface);border-top:1px solid var(--line);z-index:20}
+.nav .wrap{display:grid;grid-template-columns:repeat(4,1fr);height:100%;padding:0}
+.nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.74rem;font-weight:600;color:var(--muted);cursor:pointer;position:relative}
+.nav button.on{color:var(--brand)}
+.nav button.on::after{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
+.nav .dot{position:absolute;top:8px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--bad);color:#fff;font-size:.68rem;display:grid;place-items:center}
+.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:8px}
+.tabs button{background:none;border:0;padding:12px 14px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--gold)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.tile b{display:block;font-family:var(--f-display);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.tile span{font-size:.8rem;color:var(--muted)}
+.tile.alert-t{border-color:var(--bad)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--brand-soft)}
+.filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.bar{display:grid;grid-template-columns:minmax(120px,38%) 1fr 40px;gap:10px;align-items:center;font-size:.88rem}
+.bar i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--gold),#d4c07e)}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:900px){.grid2{grid-template-columns:1.4fr 1fr}}
+.pix{display:flex;flex-direction:column;align-items:center;gap:10px}
+.pix canvas{width:180px;height:180px;border-radius:8px;background:#fff}
+.code{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;word-break:break-all;width:100%}
+.modal{position:fixed;inset:0;background:rgba(5,12,25,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.modal .sheet{background:var(--surface);width:100%;max-width:640px;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:20px}
+@media (min-width:700px){.modal{align-items:center}.modal .sheet{border-radius:18px}}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;font-size:.9rem;z-index:60;max-width:90vw}
+.empty{text-align:center;padding:28px 12px;color:var(--muted)}
+.loading{padding:60px 16px;text-align:center;color:var(--muted)}
+.switch{display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer}
+.switch input{width:20px;height:20px;accent-color:var(--gold)}
+hr{border:0;border-top:1px solid var(--line);margin:4px 0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="banner"></div>
+<header class="top"><div class="wrap" id="topbar"></div></header>
+<main id="app"><div class="loading">Carregando Stillo MEI…</div></main>
+<nav class="nav" id="nav" aria-label="Navegação principal"></nav>
+<div id="modal-root"></div>
+<script src="/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+"use strict";
+/* ====================== CATÁLOGO PADRÃO (editável no painel) ====================== */
+const ANO = new Date().getFullYear();
+const DEFAULT_CONFIG = {
+  versao: 1,
+  ambienteTeste: true,
+  emailAtendimento: "contato@stillogestao.com.br",
+  formasPagamento: ["pix"],
+  whatsapp: "",
+  equipe: ["Danielly Carvalho", "Equipe Fiscal", "Atendimento"],
+  limiteAnual: 81000,
+  limiteNota: "Limite anual do MEI (LC 123/2006, art. 18-A). Projetos de aumento estão em tramitação: atualize aqui somente após a lei entrar em vigor.",
+  servicos: [
+    {
+      codigo: "RA-001", ativo: true, categoria: "Regularização", icone: "lupa",
+      nome: "Consulta e diagnóstico do CNPJ",
+      resumo: "Descubra se o seu MEI está em dia e o que precisa ser feito.",
+      descricao: "Nossa equipe consulta a situação do seu CNPJ nos sistemas oficiais e entrega um relatório simples: se o cadastro está ativo, se há guias DAS em aberto, se as declarações anuais foram entregues e quais são os próximos passos.",
+      paraQuem: "Para quem não sabe se o MEI está regular, recebeu algum aviso, vai pedir crédito ou precisa comprovar regularidade para um contrato.",
+      incluso: ["Consulta da situação cadastral do CNPJ", "Verificação das guias DAS em aberto", "Verificação das declarações anuais entregues", "Relatório em PDF com explicação simples", "Lista de próximos passos recomendados"],
+      documentos: [
+        { id: "doc_id", nome: "Documento com foto do titular (RG ou CNH)", obrigatorio: true },
+        { id: "avisos", nome: "Avisos ou cartas recebidas da Receita ou da Prefeitura", obrigatorio: false }
+      ],
+      prazoDias: 2, preco: 49.9, gratuito: false, orcamentoPersonalizado: false, analiseHumanaSempre: false,
+      regrasHumano: "Encaminhar para análise se houver débito em dívida ativa, CNPJ inapto/baixado ou aviso de exclusão do Simples.",
+      campos: [
+        { id: "cnpj", passo: 1, tipo: "cnpj", label: "CNPJ do seu MEI", obrigatorio: true, exemplo: "00.000.000/0000-00" },
+        { id: "nomeEmpresarial", passo: 1, tipo: "text", label: "Nome da empresa", obrigatorio: true, exemplo: "Ex.: M. Silva Doces", ajuda: "Como aparece no cartão CNPJ." },
+        { id: "municipio", passo: 1, tipo: "text", label: "Cidade e estado", obrigatorio: true, exemplo: "Ex.: São Bernardo do Campo/SP" },
+        { id: "funcionario", passo: 1, tipo: "radio", label: "Você tem funcionário registrado?", obrigatorio: true, opcoes: ["Sim", "Não"] },
+        { id: "motivos", passo: 2, tipo: "checkbox", label: "Por que você quer o diagnóstico?", obrigatorio: true, opcoes: ["Quero saber se estou regular", "Recebi um aviso ou cobrança", "Vou pedir empréstimo ou financiamento", "Preciso comprovar regularidade para um contrato", "Estou pensando em fechar o MEI"] },
+        { id: "faturamentoAno", passo: 2, tipo: "money", label: "Quanto você faturou este ano, até agora?", obrigatorio: false, ajuda: "Pode ser um valor aproximado.", exemplo: "R$ 30.000,00" },
+        { id: "acesso", passo: 2, tipo: "radio", label: "Como vamos consultar seus dados?", obrigatorio: true, ajuda: "Nunca pedimos sua senha gov.br.", opcoes: ["Vou cadastrar a Stillo como procuradora no e-CAC (vocês me enviam o passo a passo)", "Prefiro falar com a equipe sobre o acesso"] },
+        { id: "obs", passo: 2, tipo: "textarea", label: "Quer contar mais alguma coisa?", obrigatorio: false, exemplo: "Ex.: recebi uma carta da Receita em março." }
+      ]
+    },
+    {
+      codigo: "RA-002", ativo: true, categoria: "Declarações", icone: "doc",
+      nome: "Declaração anual DASN-SIMEI",
+      resumo: "Entregamos sua declaração anual de faturamento sem complicação.",
+      descricao: "Todo MEI precisa informar, uma vez por ano, quanto faturou no ano anterior. O prazo é até 31 de maio. Você informa os valores, nós conferimos, transmitimos a declaração e enviamos o recibo de entrega.",
+      paraQuem: "Para MEIs que ainda não entregaram a declaração do ano anterior ou que têm declarações de anos passados em atraso.",
+      incluso: ["Conferência dos valores informados", "Aviso se o faturamento passou do limite do MEI", "Transmissão da declaração", "Recibo de entrega em PDF", "Orientação sobre multa, se a entrega estiver em atraso"],
+      documentos: [
+        { id: "doc_id", nome: "Documento com foto do titular (RG ou CNH)", obrigatorio: true },
+        { id: "relatorio", nome: "Relatório mensal de receitas, extratos ou notas emitidas no ano", obrigatorio: false }
+      ],
+      prazoDias: 2, preco: 89.9, gratuito: false, orcamentoPersonalizado: false, analiseHumanaSempre: false,
+      regrasHumano: "Encaminhar para análise se o faturamento passar do limite (proporcional no ano de abertura) ou se a declaração for retificadora.",
+      campos: [
+        { id: "cnpj", passo: 1, tipo: "cnpj", label: "CNPJ do seu MEI", obrigatorio: true, exemplo: "00.000.000/0000-00" },
+        { id: "anoCalendario", passo: 1, tipo: "select", label: "De qual ano é a declaração?", obrigatorio: true, ajuda: "É o ano em que você teve o faturamento. Em " + ANO + ", a declaração normal é a de " + (ANO - 1) + ".", opcoes: [String(ANO - 1), String(ANO - 2), String(ANO - 3), String(ANO - 4), String(ANO - 5)] },
+        { id: "tipoDeclaracao", passo: 1, tipo: "radio", label: "Essa declaração já foi entregue antes?", obrigatorio: true, opcoes: ["Não, é a primeira entrega", "Sim, preciso corrigir"] },
+        { id: "abertoNoAno", passo: 1, tipo: "radio", label: "O MEI foi aberto nesse mesmo ano?", obrigatorio: true, opcoes: ["Sim", "Não"] },
+        { id: "mesAbertura", passo: 1, tipo: "select", label: "Em que mês foi aberto?", obrigatorio: true, mostrarSe: { campo: "abertoNoAno", valor: "Sim" }, opcoes: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"] },
+        { id: "receitaTotal", passo: 2, tipo: "money", label: "Quanto você faturou no ano, no total?", obrigatorio: true, ajuda: "Tudo o que entrou com vendas e serviços, sem descontar despesas.", exemplo: "R$ 45.000,00" },
+        { id: "receitaComercio", passo: 2, tipo: "money", label: "Quanto desse total veio da venda de produtos?", obrigatorio: true, ajuda: "Comércio ou fabricação. Se você só presta serviços, informe 0.", exemplo: "R$ 0,00" },
+        { id: "teveEmpregado", passo: 2, tipo: "radio", label: "Você teve funcionário registrado nesse ano?", obrigatorio: true, opcoes: ["Sim", "Não"] },
+        { id: "obs", passo: 2, tipo: "textarea", label: "Observações", obrigatorio: false }
+      ]
+    },
+    {
+      codigo: "RA-003", ativo: true, categoria: "Débitos", icone: "moeda",
+      nome: "Consulta e orientação sobre débitos",
+      resumo: "Saiba quanto você deve e qual a melhor forma de pagar.",
+      descricao: "Levantamos as guias DAS em aberto do seu MEI, com valores atualizados, e explicamos em linguagem simples as opções: pagar à vista, parcelar ou priorizar algumas guias.",
+      paraQuem: "Para quem deixou de pagar o DAS em algum mês, recebeu cobrança ou não sabe se tem dívida.",
+      incluso: ["Levantamento das guias DAS em aberto", "Valores atualizados com multa e juros", "Verificação de débitos enviados para dívida ativa", "Relatório com as opções de pagamento", "Guias para pagamento à vista, se você quiser"],
+      documentos: [
+        { id: "doc_id", nome: "Documento com foto do titular (RG ou CNH)", obrigatorio: true },
+        { id: "avisos", nome: "Cobranças ou avisos recebidos", obrigatorio: false }
+      ],
+      prazoDias: 2, preco: 59.9, gratuito: false, orcamentoPersonalizado: false, analiseHumanaSempre: false,
+      regrasHumano: "Encaminhar para análise se houver débito em dívida ativa ou cobrança judicial.",
+      campos: [
+        { id: "cnpj", passo: 1, tipo: "cnpj", label: "CNPJ do seu MEI", obrigatorio: true, exemplo: "00.000.000/0000-00" },
+        { id: "desde", passo: 1, tipo: "select", label: "Há quanto tempo você está sem pagar o DAS?", obrigatorio: true, opcoes: ["Menos de 6 meses", "De 6 meses a 1 ano", "Mais de 1 ano", "Não sei"] },
+        { id: "recebeuCobranca", passo: 1, tipo: "radio", label: "Você recebeu alguma cobrança?", obrigatorio: true, opcoes: ["Sim", "Não", "Não sei"] },
+        { id: "dividaAtiva", passo: 2, tipo: "radio", label: "Algum débito já foi para a dívida ativa?", obrigatorio: true, ajuda: "Dívida ativa é quando a cobrança passa para a Procuradoria da Fazenda Nacional (PGFN). Se não souber, nós verificamos.", opcoes: ["Sim", "Não", "Não sei"] },
+        { id: "acesso", passo: 2, tipo: "radio", label: "Como vamos consultar seus dados?", obrigatorio: true, ajuda: "Nunca pedimos sua senha gov.br.", opcoes: ["Vou cadastrar a Stillo como procuradora no e-CAC (vocês me enviam o passo a passo)", "Prefiro falar com a equipe sobre o acesso"] },
+        { id: "obs", passo: 2, tipo: "textarea", label: "Quer contar mais alguma coisa?", obrigatorio: false }
+      ]
+    },
+    {
+      codigo: "RA-004", ativo: true, categoria: "Débitos", icone: "parcelas",
+      nome: "Parcelamento e regularização de DAS",
+      resumo: "Parcelamos suas guias em atraso para você voltar a ficar em dia.",
+      descricao: "Fazemos o pedido de parcelamento dos seus DAS em atraso e enviamos a primeira guia. O número de parcelas e o valor mínimo seguem as regras da Receita Federal ou da PGFN. O parcelamento só passa a valer depois que a primeira parcela é paga.",
+      paraQuem: "Para quem tem DAS atrasados e não consegue pagar tudo de uma vez.",
+      incluso: ["Conferência dos débitos que podem ser parcelados", "Simulação das parcelas", "Pedido de parcelamento", "Envio da primeira guia", "Orientação para emitir as próximas parcelas"],
+      documentos: [
+        { id: "doc_id", nome: "Documento com foto do titular (RG ou CNH)", obrigatorio: true },
+        { id: "avisos", nome: "Cobranças ou avisos recebidos", obrigatorio: false }
+      ],
+      prazoDias: 3, preco: 129.9, gratuito: false, orcamentoPersonalizado: false, analiseHumanaSempre: false,
+      regrasHumano: "Encaminhar para análise se já existir parcelamento ativo (reparcelamento) ou débito em dívida ativa.",
+      campos: [
+        { id: "cnpj", passo: 1, tipo: "cnpj", label: "CNPJ do seu MEI", obrigatorio: true, exemplo: "00.000.000/0000-00" },
+        { id: "parcelamentoAtivo", passo: 1, tipo: "radio", label: "Você já tem um parcelamento em andamento?", obrigatorio: true, opcoes: ["Sim", "Não", "Não sei"] },
+        { id: "dividaAtiva", passo: 1, tipo: "radio", label: "Algum débito já foi para a dívida ativa?", obrigatorio: true, ajuda: "Se não souber, nós verificamos.", opcoes: ["Sim", "Não", "Não sei"] },
+        { id: "valorMensal", passo: 2, tipo: "money", label: "Quanto você consegue pagar por mês?", obrigatorio: true, ajuda: "Usamos esse valor para sugerir o número de parcelas.", exemplo: "R$ 150,00" },
+        { id: "preferencia", passo: 2, tipo: "radio", label: "O que você prefere?", obrigatorio: true, opcoes: ["Parcelar", "Pagar à vista, se der", "Quero a orientação da equipe"] },
+        { id: "acesso", passo: 2, tipo: "radio", label: "Como vamos acessar seus dados?", obrigatorio: true, ajuda: "Nunca pedimos sua senha gov.br.", opcoes: ["Vou cadastrar a Stillo como procuradora no e-CAC (vocês me enviam o passo a passo)", "Prefiro falar com a equipe sobre o acesso"] },
+        { id: "obs", passo: 2, tipo: "textarea", label: "Observações", obrigatorio: false }
+      ]
+    },
+    {
+      codigo: "RA-005", ativo: true, categoria: "Alterações", icone: "seta",
+      nome: "Desenquadramento e migração de MEI para ME",
+      resumo: "Seu negócio cresceu? Orientamos e fazemos a passagem de MEI para ME.",
+      descricao: "Analisamos se você precisa (ou pode) deixar de ser MEI, a partir de quando, e quais impostos passam a valer. Depois, fazemos a comunicação de desenquadramento e orientamos a nova rotina como Microempresa (ME).",
+      paraQuem: "Para quem passou ou vai passar do limite de faturamento, quer contratar mais de um funcionário, ter sócio, abrir filial ou exercer atividade não permitida para MEI.",
+      incluso: ["Análise do motivo e da data em que a mudança passa a valer", "Estimativa dos impostos como ME no Simples Nacional", "Comunicação de desenquadramento", "Plano de transição com os próximos passos", "Proposta de contabilidade mensal da ME (opcional)"],
+      documentos: [
+        { id: "doc_id", nome: "Documento com foto do titular (RG ou CNH)", obrigatorio: true },
+        { id: "relatorio", nome: "Relatório de faturamento do ano ou extratos bancários", obrigatorio: true }
+      ],
+      prazoDias: 5, preco: 199.9, gratuito: false, orcamentoPersonalizado: true, analiseHumanaSempre: true,
+      notaPreco: "O valor cobre a análise e a comunicação de desenquadramento. A contabilidade mensal da ME é orçada à parte.",
+      regrasHumano: "Sempre passa por análise de um contador antes da execução.",
+      campos: [
+        { id: "cnpj", passo: 1, tipo: "cnpj", label: "CNPJ do seu MEI", obrigatorio: true, exemplo: "00.000.000/0000-00" },
+        { id: "motivo", passo: 1, tipo: "radio", label: "Por que você quer deixar de ser MEI?", obrigatorio: true, opcoes: ["Meu faturamento passou do limite do MEI", "Quero contratar mais de um funcionário", "Quero ter sócio ou abrir filial", "Minha atividade não é permitida para MEI", "Quero deixar de ser MEI por opção", "Não sei, quero uma análise"] },
+        { id: "atividade", passo: 1, tipo: "text", label: "O que sua empresa faz hoje?", obrigatorio: true, exemplo: "Ex.: venda de roupas e conserto de peças" },
+        { id: "faturamentoAnoAtual", passo: 2, tipo: "money", label: "Quanto você faturou este ano, até agora?", obrigatorio: true, exemplo: "R$ 90.000,00" },
+        { id: "faturamentoAnoAnterior", passo: 2, tipo: "money", label: "E no ano passado?", obrigatorio: false, exemplo: "R$ 70.000,00" },
+        { id: "abertoNoAno", passo: 2, tipo: "radio", label: "O MEI foi aberto este ano?", obrigatorio: true, opcoes: ["Sim", "Não"] },
+        { id: "mesAbertura", passo: 2, tipo: "select", label: "Em que mês foi aberto?", obrigatorio: true, mostrarSe: { campo: "abertoNoAno", valor: "Sim" }, opcoes: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"] },
+        { id: "obs", passo: 2, tipo: "textarea", label: "Quer contar mais alguma coisa?", obrigatorio: false }
+      ]
+    }
+  ]
+};
+
+/* ====================== REGRAS E TEXTOS DO SISTEMA ====================== */
+const STATUS = {
+  rascunho: { label: "Rascunho", tone: "neutral" },
+  aguardando_pagamento: { label: "Aguardando pagamento", tone: "warn" },
+  pagamento_confirmado: { label: "Pagamento confirmado", tone: "info" },
+  aguardando_documentos: { label: "Aguardando documentos", tone: "warn" },
+  em_analise: { label: "Em análise", tone: "info" },
+  em_execucao: { label: "Em execução", tone: "info" },
+  aguardando_info: { label: "Aguardando informações do cliente", tone: "warn" },
+  concluido: { label: "Concluído", tone: "ok" },
+  cancelado: { label: "Cancelado", tone: "bad" }
+};
+const AUTO_MSG = {
+  aguardando_pagamento: "Pedido criado. Falta concluir o pagamento.",
+  pagamento_confirmado: "Recebemos seu pagamento. Obrigado!",
+  aguardando_documentos: "Falta enviar documentos para começarmos. Veja a lista no pedido.",
+  em_analise: "Nossa equipe está analisando suas informações.",
+  em_execucao: "Seu serviço está em andamento.",
+  aguardando_info: "Precisamos de uma informação sua para continuar.",
+  concluido: "Seu serviço foi concluído. Os arquivos estão disponíveis no pedido.",
+  cancelado: "Pedido cancelado."
+};
+const TRACK = [
+  { label: "Pagamento", st: ["pagamento_confirmado", "aguardando_documentos", "em_analise", "em_execucao", "aguardando_info", "concluido"] },
+  { label: "Documentos", st: ["em_analise", "em_execucao", "aguardando_info", "concluido"] },
+  { label: "Análise", st: ["em_analise", "em_execucao", "aguardando_info", "concluido"] },
+  { label: "Execução", st: ["em_execucao", "concluido"] },
+  { label: "Concluído", st: ["concluido"] }
+];
+const ABERTOS = ["pagamento_confirmado", "aguardando_documentos", "em_analise", "em_execucao", "aguardando_info"];
+const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+function limiteDoAno(cfg, abertoNoAno, mesAbertura) {
+  const lim = Number(cfg.limiteAnual) || 0;
+  if (abertoNoAno === "Sim" && mesAbertura) {
+    const m = MESES.indexOf(mesAbertura);
+    if (m >= 0) return (lim / 12) * (12 - m);
+  }
+  return lim;
+}
+/* Regras por serviço: validações extras e avisos (o texto final é sempre confirmado por um contador). */
+const RULES = {
+  "RA-001": {
+    alertas(r) { const a = []; if ((r.motivos || []).includes("Recebi um aviso ou cobrança")) a.push({ tipo: "info", texto: "Se tiver o aviso em mãos, envie no passo de documentos. Isso agiliza a análise." }); return a; }
+  },
+  "RA-002": {
+    validar(r) { const e = {}; if (parseMoney(r.receitaComercio) > parseMoney(r.receitaTotal)) e.receitaComercio = "Esse valor não pode ser maior que o faturamento total."; return e; },
+    alertas(r, cfg) {
+      const a = []; const total = parseMoney(r.receitaTotal); const lim = limiteDoAno(cfg, r.abertoNoAno, r.mesAbertura);
+      if (lim && total > lim) a.push({ tipo: "warn", humano: true, texto: "Seu faturamento passou do limite do MEI para esse ano (" + brl(lim) + (r.abertoNoAno === "Sim" ? ", proporcional aos meses de atividade" : "") + "). Um contador vai analisar seu caso antes da entrega, porque pode haver imposto a complementar ou necessidade de deixar de ser MEI." });
+      else if (lim && total > lim * 0.8) a.push({ tipo: "info", texto: "Seu faturamento ficou acima de 80% do limite. Vale acompanhar de perto no próximo ano." });
+      if (r.tipoDeclaracao === "Sim, preciso corrigir") a.push({ tipo: "info", humano: true, texto: "Declarações de correção passam por conferência de um contador." });
+      if (r.anoCalendario && Number(r.anoCalendario) < ANO - 1) a.push({ tipo: "info", texto: "Declarações entregues depois do prazo podem gerar multa, calculada pelo sistema da Receita. Vamos informar o valor antes de transmitir." });
+      return a;
+    }
+  },
+  "RA-003": {
+    alertas(r) { const a = []; if (r.dividaAtiva === "Sim") a.push({ tipo: "info", humano: true, texto: "Débitos em dívida ativa são tratados com a PGFN. Um contador vai cuidar do seu caso." }); return a; }
+  },
+  "RA-004": {
+    alertas(r) {
+      const a = [];
+      if (r.parcelamentoAtivo === "Sim") a.push({ tipo: "warn", humano: true, texto: "Como já existe um parcelamento, um contador vai verificar as regras para um novo pedido antes de seguir." });
+      if (r.dividaAtiva === "Sim") a.push({ tipo: "info", humano: true, texto: "Débitos em dívida ativa são parcelados junto à PGFN, com regras próprias. Vamos te orientar." });
+      a.push({ tipo: "info", texto: "A aprovação do parcelamento depende da Receita Federal ou da PGFN e do pagamento da primeira parcela." });
+      return a;
+    }
+  },
+  "RA-005": {
+    alertas(r, cfg) {
+      const a = [{ tipo: "info", humano: true, texto: "Este serviço sempre passa pela análise de um contador antes de qualquer alteração no seu cadastro." }];
+      const lim = limiteDoAno(cfg, r.abertoNoAno, r.mesAbertura); const fat = parseMoney(r.faturamentoAnoAtual);
+      if (lim && fat > lim * 1.2) a.push({ tipo: "warn", texto: "Seu faturamento passou mais de 20% do limite. Em regra, nesse caso a mudança para ME vale desde janeiro deste ano. O contador confirma a data e os impostos na análise." });
+      else if (lim && fat > lim) a.push({ tipo: "warn", texto: "Seu faturamento passou do limite em até 20%. Em regra, a mudança para ME vale a partir de janeiro do ano que vem. O contador confirma na análise." });
+      return a;
+    }
+  }
+};
+
+/* ====================== UTILITÁRIOS ====================== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const brl = v => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+function parseMoney(s) { if (typeof s === "number") return s; s = String(s || "").replace(/[^\d,.-]/g, ""); if (s.includes(",")) s = s.replace(/\./g, "").replace(",", "."); else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, ""); const n = parseFloat(s); return isNaN(n) ? 0 : n; }
+const dig = s => String(s || "").replace(/\D/g, "");
+function maskCNPJ(v) { const d = dig(v).slice(0, 14); return d.replace(/^(\d{2})(\d)/, "$1.$2").replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3").replace(/\.(\d{3})(\d)/, ".$1/$2").replace(/(\d{4})(\d)/, "$1-$2"); }
+function maskCPF(v) { const d = dig(v).slice(0, 11); return d.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2"); }
+function maskFone(v) { const d = dig(v).slice(0, 11); if (d.length <= 10) return d.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2"); return d.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2"); }
+function cnpjValido(v) { const c = dig(v); if (c.length !== 14 || /^(\d)\1+$/.test(c)) return false; const calc = b => { let s = 0, p = b.length - 7; for (let i = 0; i < b.length; i++) { s += +b[i] * p--; if (p < 2) p = 9; } const r = s % 11; return r < 2 ? 0 : 11 - r; }; return calc(c.slice(0, 12)) === +c[12] && calc(c.slice(0, 13)) === +c[13]; }
+function cpfValido(v) { const c = dig(v); if (c.length !== 11 || /^(\d)\1+$/.test(c)) return false; let s = 0; for (let i = 0; i < 9; i++) s += +c[i] * (10 - i); let d = (s * 10) % 11; if (d === 10) d = 0; if (d !== +c[9]) return false; s = 0; for (let i = 0; i < 10; i++) s += +c[i] * (11 - i); d = (s * 10) % 11; if (d === 10) d = 0; return d === +c[10]; }
+const uid6 = () => Math.random().toString(36).slice(2, 8);
+const now = () => new Date().toISOString();
+const fmtData = iso => iso ? new Date(iso).toLocaleDateString("pt-BR") : "—";
+const fmtDH = iso => iso ? new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+function addDiasUteis(iso, n) { const d = new Date(iso); let a = 0; while (a < n) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (w !== 0 && w !== 6) a++; } return d.toISOString(); }
+function novoNumero() { const d = new Date(); const p = n => String(n).padStart(2, "0"); return "RA" + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + "-" + String(Math.floor(1000 + Math.random() * 9000)); }
+const hkey = () => "h" + Date.now() + uid6();
+function deepMerge(t, s) { for (const k of Object.keys(s)) { const v = s[k]; if (v && typeof v === "object" && !Array.isArray(v)) { if (!t[k] || typeof t[k] !== "object" || Array.isArray(t[k])) t[k] = {}; deepMerge(t[k], v); } else t[k] = v; } return t; }
+const clone = o => JSON.parse(JSON.stringify(o));
+const ICONS = {
+  clipe: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>',
+  lupa: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  doc: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>',
+  moeda: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2s1.3 1.7 3 2 3 .9 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/></svg>',
+  parcelas: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2M7 17h2"/></svg>',
+  seta: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l6-6 4 4 6-8"/><path d="M15 8h5v5"/></svg>',
+  casa: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>',
+  lista: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>',
+  pasta: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  pessoa: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg>',
+  calendario: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>',
+  carteira: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M16 13h2"/></svg>'
+};
+
+/* ====================== CAMADA DE DADOS ====================== */
+/* Modo "db": banco compartilhado da página publicada (cliente e equipe Stillo veem os mesmos pedidos).
+   Modo "memoria": demonstração local quando o banco não está disponível (nada é salvo). */
+const Mem = {
+  docs: {}, subs: [],
+  emit(path) { for (const s of this.subs) { if (s.doc === path) s.cb(this.docs[path] ? clone(this.docs[path]) : null); else if (s.col && path.startsWith(s.col + "/") && path.split("/").length === s.col.split("/").length + 1) s.cb(this.list(s.col)); } },
+  list(col) { return Object.keys(this.docs).filter(p => p.startsWith(col + "/") && p.split("/").length === col.split("/").length + 1).map(p => ({ id: p.split("/").pop(), data: clone(this.docs[p]) })); },
+  seed() {
+    this.docs["config/catalogo"] = clone(DEFAULT_CONFIG);
+    const pago = new Date(Date.now() - 3 * 864e5).toISOString();
+    this.docs["clientes/demo-ana"] = {
+      perfil: { nome: "Ana Paula Ferreira (fictícia)", cpf: "529.982.247-25", telefone: "(11) 90000-0000", email: "ana.ficticia@exemplo.com", cnpj: "11.222.333/0001-81", consentimento: true, criadoEm: pago },
+      pedidos: { "RA261029-4821": { id: "RA261029-4821", numero: "RA261029-4821", servico: "RA-002", servicoNome: "Declaração anual DASN-SIMEI", preco: 89.9, status: "em_analise", criadoEm: pago, pagoEm: pago, prazoFinal: addDiasUteis(pago, 2), respostas: { cnpj: "11.222.333/0001-81", anoCalendario: String(ANO - 1), tipoDeclaracao: "Não, é a primeira entrega", abertoNoAno: "Não", receitaTotal: "R$ 52.300,00", receitaComercio: "R$ 12.000,00", teveEmpregado: "Não" }, pagamento: { metodo: "pix", valor: 89.9, confirmadoEm: pago, comprovante: "CMP-DEMO01", simulado: true }, documentos: {}, historico: { h1: { em: pago, status: "aguardando_pagamento", texto: AUTO_MSG.aguardando_pagamento, por: "sistema" }, h2: { em: pago, status: "em_analise", texto: AUTO_MSG.em_analise, por: "sistema" } }, mensagens: {}, alertas: [], analiseHumana: false } }
+    };
+  }
+};
+const CONF = window.STILLO_CONFIG || {};
+const Store = {
+  mode: "memoria", sb: null, uid: null, email: "", isAdmin: false, logado: false, recarregadores: [],
+  async init() {
+    if (CONF.SUPABASE_URL && CONF.SUPABASE_ANON_KEY && window.supabase) {
+      this.mode = "supabase";
+      this.sb = window.supabase.createClient(CONF.SUPABASE_URL, CONF.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+      const { data } = await this.sb.auth.getSession();
+      const sess = data && data.session;
+      if (sess) {
+        this.logado = true; this.uid = sess.user.id; this.email = sess.user.email || "";
+        const r = await this.sb.rpc("is_staff"); this.isAdmin = !r.error && !!r.data;
+      }
+      this.sb.auth.onAuthStateChange((ev, sessao) => {
+        if (ev === "SIGNED_IN" && !this.logado && sessao) location.reload();
+        if (ev === "SIGNED_OUT" && this.logado) location.reload();
+      });
+      return;
+    }
+    this.mode = "memoria"; Mem.seed(); this.uid = "demo-voce"; this.isAdmin = true; this.logado = true; this.email = "demo@exemplo.com";
+  },
+  /* ---------- modo demonstração (sem Supabase configurado) ---------- */
+  _watchDoc(path, cb) { const s = { doc: path, cb }; Mem.subs.push(s); setTimeout(() => cb(Mem.docs[path] ? clone(Mem.docs[path]) : null), 0); },
+  _watchCol(col, cb) { const s = { col, cb }; Mem.subs.push(s); setTimeout(() => cb(Mem.list(col)), 0); },
+  async _set(path, data) { Mem.docs[path] = clone(data); Mem.emit(path); },
+  async _update(path, patch) { if (!Mem.docs[path]) throw { code: "invalid_argument" }; deepMerge(Mem.docs[path], clone(patch)); Mem.emit(path); },
+  /* ---------- Supabase ---------- */
+  _assinar(nome, tabelas, filtro, recarregar) {
+    let t = null; const agendar = () => { clearTimeout(t); t = setTimeout(recarregar, 250); };
+    let ch = this.sb.channel(nome);
+    for (const tb of tabelas) ch = ch.on("postgres_changes", Object.assign({ event: "*", schema: "public", table: tb }, filtro ? { filter: filtro } : {}), agendar);
+    ch.subscribe();
+    this.recarregadores.push(recarregar);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) agendar(); });
+  },
+  async recarregarTudo() { await Promise.all(this.recarregadores.map(f => f().catch(e => console.error(e)))); },
+  _montar(cli, peds) {
+    const pedidos = {};
+    for (const r of peds) pedidos[r.id] = Object.assign({}, r.dados, { id: r.id, numero: (r.dados && r.dados.numero) || r.id, status: r.status, preco: Number(r.preco), servico: r.servico, criadoEm: (r.dados && r.dados.criadoEm) || r.criado_em });
+    return { perfil: cli ? cli.perfil : null, pedidos };
+  },
+  watchConfig(cb, err) {
+    if (this.mode === "memoria") return this._watchDoc("config/catalogo", cb);
+    const carregar = async () => { const { data, error } = await this.sb.from("config").select("dados").eq("id", "catalogo").maybeSingle(); if (error) throw error; cb(data ? data.dados : null); };
+    carregar().catch(err); if (this.logado) this._assinar("cfg", ["config"], null, carregar);
+  },
+  async saveConfig(c) {
+    if (this.mode === "memoria") return this._set("config/catalogo", c);
+    const { error } = await this.sb.from("config").upsert({ id: "catalogo", dados: c, atualizado_em: new Date().toISOString() }); if (error) throw error; await this.recarregarTudo();
+  },
+  watchMeuCadastro(cb, err) {
+    if (this.mode === "memoria") return this._watchDoc("clientes/" + this.uid, cb);
+    if (!this.logado) { setTimeout(() => cb(null), 0); return; }
+    const carregar = async () => {
+      const [c, p] = await Promise.all([this.sb.from("clientes").select("*").eq("uid", this.uid).maybeSingle(), this.sb.from("pedidos").select("*").eq("uid", this.uid)]);
+      if (c.error || p.error) throw (c.error || p.error);
+      cb(c.data ? this._montar(c.data, p.data || []) : null);
+    };
+    carregar().catch(err); this._assinar("meus", ["clientes", "pedidos"], "uid=eq." + this.uid, carregar);
+  },
+  async criarCadastro(data) {
+    if (this.mode === "memoria") return this._set("clientes/" + this.uid, data);
+    const { error } = await this.sb.from("clientes").insert({ uid: this.uid, perfil: data.perfil }); if (error) throw error; await this.recarregarTudo();
+  },
+  async atualizarCliente(uid, patch) {
+    if (this.mode === "memoria") return this._update("clientes/" + uid, patch);
+    if (patch.perfil) { const { error } = await this.sb.rpc("merge_cliente", { p_uid: uid, p_patch: patch.perfil }); if (error) throw error; }
+    for (const [id, pp] of Object.entries(patch.pedidos || {})) { const { error } = await this.sb.rpc("merge_pedido", { p_id: id, p_patch: pp }); if (error) throw error; }
+    await this.recarregarTudo();
+  },
+  watchClientes(cb, err) {
+    if (this.mode === "memoria") return this._watchCol("clientes", cb);
+    const carregar = async () => {
+      const [c, p] = await Promise.all([this.sb.from("clientes").select("*"), this.sb.from("pedidos").select("*")]);
+      if (c.error || p.error) throw (c.error || p.error);
+      const porUid = {}; for (const r of p.data || []) (porUid[r.uid] = porUid[r.uid] || []).push(r);
+      cb((c.data || []).map(cli => ({ id: cli.uid, data: Object.assign(this._montar(cli, porUid[cli.uid] || []), { perfil: Object.assign({ criadoEm: cli.criado_em }, cli.perfil) }) })));
+    };
+    carregar().catch(err); this._assinar("todos", ["clientes", "pedidos"], null, carregar);
+  },
+  watchInterno(cb, err) {
+    if (this.mode === "memoria") return this._watchCol("interno", cb);
+    const carregar = async () => { const { data, error } = await this.sb.from("interno").select("*"); if (error) throw error; cb((data || []).map(r => ({ id: r.uid, data: r.dados }))); };
+    carregar().catch(err); this._assinar("interno", ["interno"], null, carregar);
+  },
+  async atualizarInterno(uid, patch, existe) {
+    if (this.mode === "memoria") { if (existe) return this._update("interno/" + uid, patch); return this._set("interno/" + uid, patch); }
+    const { error } = await this.sb.rpc("merge_interno", { p_uid: uid, p_patch: patch }); if (error) throw error; await this.recarregarTudo();
+  },
+  podeEnviarArquivo() { return true; },
+  async enviarArquivo(file, ctx = {}) {
+    if (this.mode === "memoria") return { id: "mem-" + uid6(), url: URL.createObjectURL(file) };
+    const ext = (file.name.match(/\.(pdf|jpe?g|png)$/i) || [".pdf"])[0].toLowerCase();
+    const caminho = (ctx.dono || this.uid) + "/" + (ctx.pedido || "rascunho") + "/" + Date.now() + "-" + uid6() + ext;
+    const { error } = await this.sb.storage.from("documentos").upload(caminho, file, { contentType: file.type || undefined, upsert: false });
+    if (error) throw new Error(error.message || "falha no envio");
+    return { id: caminho, url: "", caminho };
+  },
+  async urlArquivo(caminho) {
+    const { data, error } = await this.sb.storage.from("documentos").createSignedUrl(caminho, 300);
+    if (error) throw error; return data.signedUrl;
+  },
+  podeBaixar() { return true; },
+  async baixar(nome, conteudo) {
+    const tipo = /\.csv$/.test(nome) ? "text/csv;charset=utf-8" : "text/html;charset=utf-8";
+    const url = URL.createObjectURL(new Blob([conteudo], { type: tipo }));
+    const a = document.createElement("a"); a.href = url; a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000); return true;
+  },
+  async api(caminho, corpo) {
+    const { data } = await this.sb.auth.getSession(); const tk = data && data.session && data.session.access_token;
+    const r = await fetch(caminho, { method: corpo ? "POST" : "GET", headers: Object.assign({ "Content-Type": "application/json" }, tk ? { Authorization: "Bearer " + tk } : {}), body: corpo ? JSON.stringify(corpo) : undefined });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.erro || ("Erro " + r.status));
+    return j;
+  }
+};
+
+/* ====================== ESTADO ====================== */
+const S = {
+  config: null, cadastro: undefined, clientes: [], interno: {}, modo: "cliente", view: "inicio", params: {},
+  busca: "", wiz: null, checkout: null, adminTab: "pedidos", filtros: { status: "abertos", servico: "", texto: "", de: "", ate: "" }, finDe: "", finAte: "", buscaCli: "", erroDados: ""
+};
+const cfg = () => S.config || DEFAULT_CONFIG;
+const svcByCode = c => cfg().servicos.find(s => s.codigo === c);
+const meusPedidos = () => Object.values((S.cadastro && S.cadastro.pedidos) || {}).filter(p => !p.excluido).sort((a, b) => (b.criadoEm || "").localeCompare(a.criadoEm || ""));
+function todosPedidos() {
+  const out = [];
+  for (const c of S.clientes) for (const p of Object.values(c.data.pedidos || {})) if (!p.excluido) out.push({ ...p, _uid: c.id, _cliente: (c.data.perfil && c.data.perfil.nome) || "Sem nome" });
+  return out.sort((a, b) => (b.criadoEm || "").localeCompare(a.criadoEm || ""));
+}
+function findPedido(uid, id) { if (S.modo === "cliente") return S.cadastro && S.cadastro.pedidos && S.cadastro.pedidos[id]; const c = S.clientes.find(x => x.id === uid); return c && c.data.pedidos && c.data.pedidos[id]; }
+
+/* ====================== TEMA (claro / escuro / automático) ====================== */
+const LOGO = "data:image/png;base64,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";
+const TEMAS = {
+  auto: { nome: "automático", prox: "claro", ico: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>' },
+  claro: { nome: "claro", prox: "escuro", ico: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>' },
+  escuro: { nome: "escuro", prox: "auto", ico: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>' }
+};
+let temaAtual = "auto";
+try { const t = localStorage.getItem("stillo-tema"); if (TEMAS[t]) temaAtual = t; } catch (e) { }
+const tema = () => temaAtual;
+function aplicarTema() { const r = document.documentElement; if (temaAtual === "auto") r.removeAttribute("data-tema"); else r.setAttribute("data-tema", temaAtual); }
+aplicarTema();
+
+/* ====================== UI BASE ====================== */
+function linkArq(d) {
+  if (d.caminho) return `<button type="button" class="link" data-arq="${esc(d.caminho)}">${esc(d.nome)}</button>`;
+  return `<a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.nome)}</a>`;
+}
+let toastT;
+function toast(msg) { let t = $("#toast"); if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); } t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 3200); }
+function modal(html) { $("#modal-root").innerHTML = `<div class="modal" data-a="fecharModal" data-fundo="1"><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`; }
+function fecharModal() { $("#modal-root").innerHTML = ""; }
+function chip(st) { const s = STATUS[st] || { label: st, tone: "neutral" }; return `<span class="chip t-${s.tone}">${esc(s.label)}</span>`; }
+function go(view, params = {}) { S.view = view; S.params = params; render(); window.scrollTo(0, 0); }
+function erroEscrita(e) { console.error(e); const c = e && e.code; if (c === "quota_exceeded") toast("O espaço de dados está cheio. Avise a equipe Stillo."); else if (c === "invalid_argument") toast("Não foi possível salvar: seu acesso não permite gravar. Peça acesso de Contributor."); else toast("Não foi possível salvar agora. Tente de novo em instantes."); }
+async function salvar(fn) { try { await fn(); return true; } catch (e) { erroEscrita(e); return false; } }
+
+function renderTop() {
+  const admin = S.modo === "admin";
+  $("#topbar").className = "wrap" + (admin ? " wide" : "");
+  $("#topbar").innerHTML = `
+    <button class="brand" data-a="home" aria-label="Início"><img class="brand-mark" src="${LOGO}" alt=""><span>Stillo MEI<small>${admin ? "Painel da equipe" : "Gestão Contábil"}</small></span></button>
+    <span class="spacer"></span>
+    <button class="topbtn icon" data-a="tema" aria-label="Tema: ${TEMAS[tema()].nome}. Tocar para mudar" title="Tema: ${TEMAS[tema()].nome}">${TEMAS[tema()].ico}</button>
+    ${Store.isAdmin ? `<button class="topbtn" data-a="alternarModo">${admin ? "Ver como cliente" : "Painel Stillo"}</button>` : ""}`;
+  const b = [];
+  if (Store.mode === "memoria") b.push("Modo demonstração: configure o Supabase em config.js. Nada fica salvo.");
+  if (cfg().ambienteTeste) b.push(Store.mode === "supabase" ? "Ambiente de testes: os Pix ainda não são cobrados de verdade." : "Pagamentos simulados.");
+  if (S.erroDados) b.push(S.erroDados);
+  $("#banner").innerHTML = b.length ? `<div class="banner">${b.map(esc).join(" ")}</div>` : "";
+  const nav = $("#nav");
+  if (admin) { nav.hidden = true; document.body.style.paddingBottom = "24px"; return; }
+  nav.hidden = false; document.body.style.paddingBottom = "";
+  const naoLidos = meusPedidos().filter(p => p.naoLido).length;
+  const item = (v, ico, txt, extra = "") => `<button class="${S.view === v || (v === "pedidos" && S.view === "pedido") ? "on" : ""}" data-a="nav" data-v="${v}">${ICONS[ico]}${txt}${extra}</button>`;
+  nav.innerHTML = `<div class="wrap">${item("inicio", "casa", "Início")}${item("pedidos", "lista", "Pedidos", naoLidos ? `<span class="dot">${naoLidos}</span>` : "")}${item("documentos", "pasta", "Documentos")}${item("conta", "pessoa", "Conta")}</div>`;
+}
+
+let pendente = false;
+function renderSeguro() { if (S.sujo) { pendente = true; return; } render(); }
+function render() {
+  if (S.view === "wizard" && S.wiz && $("#formWizard")) lerWizard();
+  S.sujo = false; pendente = false;
+  renderTop();
+  const app = $("#app");
+  if (!S.config) { app.innerHTML = `<div class="loading">Carregando catálogo…</div>`; return; }
+  if (S.modo === "admin") { app.innerHTML = renderAdmin(); afterRender(); return; }
+  if (S.cadastro === undefined) { app.innerHTML = `<div class="loading">Carregando seus dados…</div>`; return; }
+  if (!Store.logado && ["pedidos", "pedido", "documentos", "conta", "cadastro", "wizard", "checkout", "sucesso"].includes(S.view)) S.view = "login";
+  const V = { login: vLogin, inicio: vInicio, servico: vServico, cadastro: vCadastro, wizard: vWizard, checkout: vCheckout, pedidos: vPedidos, pedido: vPedido, documentos: vDocumentos, conta: vConta, sucesso: vSucesso };
+  app.innerHTML = (V[S.view] || vInicio)();
+  afterRender();
+}
+function afterRender() {
+  const cv = $("#pixqr"); if (cv) desenharQR(cv, S.checkout ? S.checkout.pid : "x");
+  if (Store.mode === "supabase" && S.modo === "cliente" && S.view === "checkout" && S.checkout) {
+    const p = findPedido(Store.uid, S.checkout.pid);
+    if (p && p.status !== "aguardando_pagamento") { pararPollPix(); const id = p.id; S.checkout = null; setTimeout(() => go(ABERTOS.includes(p.status) ? "sucesso" : "pedido", { id }), 0); return; }
+    if (p && !S.checkout.gerando && !S.checkout.erro && !(p.pix && new Date(p.pix.expiraEm) > new Date())) setTimeout(() => A.gerarPix(), 0);
+    if (p) iniciarPollPix(p.id);
+  } else pararPollPix();
+}
+
+/* ====================== CLIENTE: INÍCIO ====================== */
+function vInicio() {
+  const termo = S.busca.trim().toLowerCase();
+  const ativos = cfg().servicos.filter(s => s.ativo);
+  const lista = termo ? ativos.filter(s => (s.nome + " " + s.resumo + " " + s.categoria + " " + s.descricao).toLowerCase().includes(termo)) : ativos;
+  const cats = [...new Set(lista.map(s => s.categoria))];
+  const rasc = meusPedidos().filter(p => p.status === "rascunho");
+  return `<div class="wrap">
+    <div class="modules" role="tablist" aria-label="Módulos">
+      <button class="mod on" role="tab" aria-selected="true">Resolva Agora</button>
+      <button class="mod" data-a="emBreve" data-m="MEI em Dia">MEI em Dia <span class="chip t-neutral">Em breve</span></button>
+      <button class="mod" data-a="emBreve" data-m="MEI no Azul">MEI no Azul <span class="chip t-neutral">Em breve</span></button>
+    </div>
+    <div class="hero stack">
+      <h1>O que você precisa resolver hoje?</h1>
+      <label class="search" for="busca">${ICONS.lupa}<input id="busca" type="search" placeholder="Ex.: declaração, dívida, parcelar" value="${esc(S.busca)}" autocomplete="off"></label>
+    </div>
+    ${rasc.length ? `<div class="section" style="padding-bottom:0"><div class="alert info"><b>Você tem ${rasc.length} pedido${rasc.length > 1 ? "s" : ""} não finalizado${rasc.length > 1 ? "s" : ""}.</b><p>${esc(rasc[0].servicoNome)} · <button class="link" data-a="continuar" data-id="${esc(rasc[0].id)}">Continuar de onde parei</button></p></div></div>` : ""}
+    <div class="section stack">
+      ${cats.length ? cats.map(c => `<p class="cat-title">${esc(c)}</p><div class="svc-list">${lista.filter(s => s.categoria === c).map(cardServico).join("")}</div>`).join("") : `<div class="empty">Nenhum serviço encontrado para “${esc(S.busca)}”.<br><button class="link" data-a="limparBusca">Ver todos os serviços</button></div>`}
+    </div>
+    <div class="section stack">
+      <p class="cat-title">Chegando em breve</p>
+      <div class="soon">
+        <div class="card flat stack"><div class="row">${ICONS.calendario}<b>MEI em Dia</b></div><p class="small muted">Lembretes de prazos e acompanhamento do seu limite de faturamento.</p><span class="chip t-neutral" style="align-self:flex-start">Em breve</span></div>
+        <div class="card flat stack"><div class="row">${ICONS.carteira}<b>MEI no Azul</b></div><p class="small muted">Controle de entradas e saídas por mensagem ou foto.</p><span class="chip t-neutral" style="align-self:flex-start">Em breve</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+function cardServico(s) {
+  return `<button class="card svc" data-a="abrirServico" data-c="${esc(s.codigo)}">
+    <span class="ico">${ICONS[s.icone] || ICONS.doc}</span>
+    <span class="stack" style="gap:2px"><h3>${esc(s.nome)}</h3><span class="small muted">${esc(s.resumo)}</span></span>
+    <span class="price">${s.gratuito ? "Grátis" : brl(s.preco)}</span>
+  </button>`;
+}
+
+/* ====================== CLIENTE: PÁGINA DO SERVIÇO ====================== */
+function vServico() {
+  const s = svcByCode(S.params.c); if (!s) return vInicio();
+  return `<div class="wrap" style="padding-bottom:90px">
+    <button class="back" data-a="home">← Voltar</button>
+    <div class="section stack">
+      <div class="row"><span class="chip t-info">${esc(s.categoria)}</span><span class="small muted">${esc(s.codigo)}</span></div>
+      <h1>${esc(s.nome)}</h1>
+      <p>${esc(s.descricao)}</p>
+      <div class="facts">
+        <div class="fact"><b>${s.gratuito ? "Grátis" : brl(s.preco)}</b><span>${s.orcamentoPersonalizado ? "Valor inicial" : "Preço fechado"}</span></div>
+        <div class="fact"><b>${s.prazoDias} dia${s.prazoDias > 1 ? "s" : ""} úteis</b><span>Prazo após pagamento e documentos</span></div>
+      </div>
+      ${s.notaPreco ? `<div class="alert info"><p>${esc(s.notaPreco)}</p></div>` : ""}
+      <div class="card flat stack"><h3>Para quem é</h3><p>${esc(s.paraQuem)}</p></div>
+      <div class="card flat stack"><h3>O que está incluído</h3><ul class="check">${s.incluso.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div>
+      <div class="card flat stack"><h3>Documentos que vamos pedir</h3><ul class="check">${s.documentos.map(d => `<li>${esc(d.nome)}${d.obrigatorio ? "" : ' <span class="muted small">(se tiver)</span>'}</li>`).join("")}</ul><p class="small muted">Você envia pelo próprio app, em PDF, JPG ou PNG.</p></div>
+      <p class="small muted">Serviços que dependem de órgãos públicos (Receita Federal, PGFN, Prefeitura) seguem os prazos e as decisões desses órgãos. Nós cuidamos de tudo o que está ao nosso alcance e mantemos você informado.</p>
+    </div>
+  </div>
+  <div class="sticky-cta"><div class="wrap"><div class="stack" style="gap:0;flex:1"><b>${s.gratuito ? "Grátis" : brl(s.preco)}</b><span class="small muted">${s.prazoDias} dias úteis</span></div><button class="btn" data-a="contratar" data-c="${esc(s.codigo)}">Contratar agora</button></div></div>`;
+}
+
+/* ====================== CLIENTE: ENTRAR ====================== */
+function vLogin() {
+  const L = S.login || (S.login = { etapa: 1, email: "" });
+  return `<div class="wrap"><div class="section stack">
+    <h1>Entrar no Stillo MEI</h1>
+    <p class="muted">Sem senha: enviamos um código de acesso para o seu e-mail.</p>
+    ${L.etapa === 1 ? `<form id="formLogin" class="stack" novalidate>
+        <div class="field"><label for="lg_email">Seu e-mail</label><input class="input" id="lg_email" type="email" inputmode="email" autocomplete="email" value="${esc(L.email)}" placeholder="voce@exemplo.com"></div>
+        <button class="btn block" type="submit">Receber código</button></form>`
+    : `<form id="formCodigo" class="stack" novalidate>
+        <p>Enviamos um código para <b>${esc(L.email)}</b>. Ele chega em até 1 minuto. Se não aparecer, confira a caixa de spam.</p>
+        <div class="field"><label for="lg_cod">Código de acesso</label><input class="input otp" id="lg_cod" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="000000"></div>
+        <button class="btn block" type="submit">Entrar</button>
+        <button type="button" class="btn ghost block" data-a="loginVoltar">Usar outro e-mail</button></form>`}
+    <p class="small muted">Ao entrar, você concorda com os <button class="link" data-a="verTermos">termos de uso e a política de privacidade</button>.</p>
+  </div></div>`;
+}
+
+/* ====================== CLIENTE: CADASTRO ====================== */
+function vCadastro() {
+  const p = (S.cadastro && S.cadastro.perfil) || {};
+  const e = S.params.erros || {};
+  return `<div class="wrap">
+    <button class="back" data-a="voltarCadastro">← Voltar</button>
+    <form class="section stack" id="formCadastro" novalidate>
+      <h1>${S.cadastro ? "Seus dados" : "Antes de começar, seus dados"}</h1>
+      <p class="muted">Usamos essas informações para identificar você e falar sobre seus pedidos.</p>
+      ${campoSimples("nome", "Nome completo", p.nome, e.nome, "Ex.: Maria da Silva")}
+      ${campoSimples("cpf", "CPF", p.cpf, e.cpf, "000.000.000-00", "numeric")}
+      ${campoSimples("cnpj", "CNPJ do MEI (se já tiver)", p.cnpj, e.cnpj, "00.000.000/0000-00", "numeric")}
+      ${campoSimples("telefone", "Celular com WhatsApp", p.telefone, e.telefone, "(11) 90000-0000", "tel")}
+      ${campoSimples("email", "E-mail", p.email, e.email, "voce@exemplo.com", "email")}
+      <label class="opt"><input type="checkbox" id="consentimento" ${p.consentimento ? "checked" : ""}><span>Autorizo a Stillo Gestão Contábil a tratar meus dados para executar os serviços contratados, conforme a <button type="button" class="link" data-a="verTermos">política de privacidade</button>.</span></label>
+      ${e.consentimento ? `<p class="err small" style="color:var(--bad);font-weight:600">${esc(e.consentimento)}</p>` : ""}
+      <button class="btn block" type="submit">Salvar e continuar</button>
+    </form></div>`;
+}
+function campoSimples(id, label, val, err, ph, mode) {
+  return `<div class="field"><label for="c_${id}">${esc(label)}</label><input class="input ${err ? "bad" : ""}" id="c_${id}" name="${id}" value="${esc(val || "")}" placeholder="${esc(ph || "")}" ${mode ? `inputmode="${mode === "email" ? "email" : mode}" ${mode === "email" ? 'type="email"' : ""}` : ""} autocomplete="off">${err ? `<span class="err">${esc(err)}</span>` : ""}</div>`;
+}
+async function salvarCadastro(form) {
+  const v = id => $("#c_" + id, form).value.trim();
+  const d = { nome: v("nome"), cpf: maskCPF(v("cpf")), cnpj: v("cnpj") ? maskCNPJ(v("cnpj")) : "", telefone: maskFone(v("telefone")), email: v("email"), consentimento: $("#consentimento").checked };
+  const e = {};
+  if (d.nome.split(" ").filter(Boolean).length < 2) e.nome = "Informe nome e sobrenome.";
+  if (!cpfValido(d.cpf)) e.cpf = "CPF inválido. Confira os números.";
+  if (d.cnpj && !cnpjValido(d.cnpj)) e.cnpj = "CNPJ inválido. Confira os números.";
+  if (dig(d.telefone).length < 10) e.telefone = "Informe o celular com DDD.";
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) e.email = "E-mail inválido.";
+  if (!d.consentimento) e.consentimento = "Para continuar, é preciso autorizar o uso dos dados.";
+  if (Object.keys(e).length) { S.params = { ...S.params, erros: e }; render(); return; }
+  const ok = await salvar(async () => {
+    if (S.cadastro) await Store.atualizarCliente(Store.uid, { perfil: { ...d, atualizadoEm: now() } });
+    else await Store.criarCadastro({ perfil: { ...d, criadoEm: now() }, pedidos: {} });
+  });
+  if (!ok) return;
+  toast("Dados salvos.");
+  const depois = S.params.depois;
+  if (depois) iniciarWizard(depois); else go("conta");
+}
+
+/* ====================== CLIENTE: FORMULÁRIO PROGRESSIVO ====================== */
+function iniciarWizard(codigo, pedidoExistente) {
+  const s = svcByCode(codigo); if (!s) return;
+  const perfil = (S.cadastro && S.cadastro.perfil) || {};
+  if (pedidoExistente) {
+    S.wiz = { pid: pedidoExistente.id, codigo, passo: pedidoExistente.passo || 1, respostas: clone(pedidoExistente.respostas || {}), docs: clone(pedidoExistente.documentos || {}), erros: {}, aceite: false };
+  } else {
+    S.wiz = { pid: null, codigo, passo: 1, respostas: { cnpj: perfil.cnpj || "" }, docs: {}, erros: {}, aceite: false };
+  }
+  go("wizard");
+}
+const PASSOS = ["Sobre o seu MEI", "Detalhes", "Documentos", "Revisão"];
+function campoVisivel(f, r) { return !f.mostrarSe || r[f.mostrarSe.campo] === f.mostrarSe.valor; }
+function vWizard() {
+  const w = S.wiz; const s = svcByCode(w.codigo); if (!s) return vInicio();
+  const r = w.respostas; const e = w.erros;
+  let corpo = "";
+  if (w.passo <= 2) {
+    corpo = s.campos.filter(f => f.passo === w.passo && campoVisivel(f, r)).map(f => campoWizard(f, r[f.id], e[f.id])).join("");
+  } else if (w.passo === 3) {
+    corpo = `<p class="muted">Envie fotos ou PDFs legíveis. Arquivos de até 10 MB.</p>` + s.documentos.map(d => blocoUpload(d, w.docs, e["doc_" + d.id])).join("");
+  } else {
+    const al = alertasDe(s, r);
+    corpo = `
+      ${al.map(a => `<div class="alert ${a.tipo}"><p>${esc(a.texto)}</p></div>`).join("")}
+      <div class="card flat stack"><div class="row" style="justify-content:space-between"><h3>Suas respostas</h3><button class="link" data-a="irPasso" data-p="1">Editar</button></div>
+      <dl class="kv">${s.campos.filter(f => campoVisivel(f, r) && valorPreenchido(r[f.id])).map(f => `<dt>${esc(f.label)}</dt><dd>${esc(fmtResp(f, r[f.id]))}</dd>`).join("")}</dl></div>
+      <div class="card flat stack"><div class="row" style="justify-content:space-between"><h3>Documentos</h3><button class="link" data-a="irPasso" data-p="3">Editar</button></div>
+      ${s.documentos.map(d => { const fs = Object.values(w.docs).filter(x => x.docTipo === d.id); return `<div class="small"><b>${esc(d.nome)}</b><br>${fs.length ? fs.map(f => esc(f.nome)).join(", ") : '<span class="muted">Nenhum arquivo' + (d.obrigatorio ? " (você poderá enviar depois do pagamento)" : "") + "</span>"}</div>`; }).join("")}</div>
+      <div class="card stack">
+        <div class="row" style="justify-content:space-between"><span>${esc(s.nome)}</span><b>${s.gratuito ? "Grátis" : brl(s.preco)}</b></div>
+        <div class="row" style="justify-content:space-between"><span class="muted small">Prazo estimado</span><span class="small">${s.prazoDias} dias úteis após pagamento e documentos</span></div>
+        <hr><div class="row" style="justify-content:space-between"><b>Total</b><b style="font-size:1.2rem">${s.gratuito ? "Grátis" : brl(s.preco)}</b></div>
+      </div>
+      <label class="opt"><input type="checkbox" id="aceite" ${w.aceite ? "checked" : ""}><span>Li e aceito os <button type="button" class="link" data-a="verTermos">termos de uso</button>. Entendo que decisões de órgãos públicos não dependem da Stillo.</span></label>
+      ${e.aceite ? `<span class="small" style="color:var(--bad);font-weight:600">${esc(e.aceite)}</span>` : ""}`;
+  }
+  return `<div class="wrap" style="padding-bottom:20px">
+    <button class="back" data-a="${w.passo === 1 ? "sairWizard" : "passoAnterior"}">← ${w.passo === 1 ? "Sair" : "Voltar"}</button>
+    <div class="steps" aria-hidden="true">${PASSOS.map((_, i) => `<i class="${i < w.passo ? "on" : ""}"></i>`).join("")}</div>
+    <p class="small muted">Passo ${w.passo} de 4 · ${esc(s.nome)}</p>
+    <form class="section stack" id="formWizard" novalidate style="padding-top:8px">
+      <h2>${PASSOS[w.passo - 1]}</h2>
+      ${corpo}
+      <div class="stack" style="gap:10px;margin-top:6px">
+        <button class="btn block" type="submit">${w.passo < 4 ? "Continuar" : (s.gratuito ? "Confirmar pedido" : "Ir para o pagamento")}</button>
+        <button class="btn ghost block" type="button" data-a="salvarRascunho">Salvar e continuar depois</button>
+      </div>
+    </form></div>`;
+}
+function valorPreenchido(v) { return Array.isArray(v) ? v.length > 0 : v !== undefined && v !== null && String(v).trim() !== ""; }
+function fmtResp(f, v) { if (Array.isArray(v)) return v.join("; "); if (f.tipo === "money") return brl(parseMoney(v)); return v; }
+function campoWizard(f, v, err) {
+  const id = "f_" + f.id; const req = f.obrigatorio ? ' <span class="req" aria-hidden="true">*</span>' : ' <span class="muted small">(opcional)</span>';
+  const help = f.ajuda ? `<span class="help" id="${id}_h">${esc(f.ajuda)}</span>` : "";
+  const errH = err ? `<span class="err" role="alert">${esc(err)}</span>` : "";
+  let ctl = "";
+  if (f.tipo === "radio" || f.tipo === "checkbox") {
+    const vals = Array.isArray(v) ? v : [v];
+    ctl = `<div class="opts" role="${f.tipo === "radio" ? "radiogroup" : "group"}">${f.opcoes.map((o, i) => `<label class="opt"><input type="${f.tipo}" name="${f.id}" id="${id}_${i}" value="${esc(o)}" data-f="${f.id}" ${vals.includes(o) ? "checked" : ""}><span>${esc(o)}</span></label>`).join("")}</div>`;
+    return `<fieldset class="field" style="border:0;padding:0;margin:0"><legend class="lbl" style="padding:0;margin-bottom:6px">${esc(f.label)}${req}</legend>${help}${ctl}${errH}</fieldset>`;
+  }
+  if (f.tipo === "select") ctl = `<select class="input ${err ? "bad" : ""}" id="${id}" data-f="${f.id}"><option value="">Selecione</option>${f.opcoes.map(o => `<option ${o === v ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
+  else if (f.tipo === "textarea") ctl = `<textarea class="input" id="${id}" data-f="${f.id}" placeholder="${esc(f.exemplo || "")}">${esc(v || "")}</textarea>`;
+  else {
+    const mode = f.tipo === "cnpj" || f.tipo === "money" ? `inputmode="${f.tipo === "money" ? "decimal" : "numeric"}"` : "";
+    ctl = `<input class="input ${err ? "bad" : ""}" id="${id}" data-f="${f.id}" data-t="${f.tipo}" value="${esc(v || "")}" placeholder="${esc(f.exemplo || "")}" ${mode} autocomplete="off" ${f.ajuda ? `aria-describedby="${id}_h"` : ""}>`;
+  }
+  return `<div class="field"><label for="${id}">${esc(f.label)}${req}</label>${help}${ctl}${errH}</div>`;
+}
+function blocoUpload(d, docs, err, podeRemover = true) {
+  const fs = Object.entries(docs).filter(([, x]) => x.docTipo === d.id);
+  return `<div class="drop"><div><b>${esc(d.nome)}</b>${d.obrigatorio ? ' <span class="req">*</span>' : ' <span class="muted small">(opcional)</span>'}</div>
+    ${fs.map(([k, f]) => `<div class="file">${ICONS.doc}${linkArq(f)}${podeRemover ? `<button type="button" class="link" data-a="removerArquivo" data-k="${esc(k)}" aria-label="Remover ${esc(f.nome)}">Remover</button>` : `<span class="small muted">${fmtData(f.enviadoEm)}</span>`}</div>`).join("")}
+    ${Store.podeEnviarArquivo() ? `<span class="btn soft sm filebtn">${ICONS.clipe}Anexar arquivo<input type="file" accept="application/pdf,image/jpeg,image/png" data-up="${esc(d.id)}" aria-label="Anexar ${esc(d.nome)}"></span><span class="small muted">Ou arraste o arquivo para esta área.</span>` : `<p class="small muted">O envio de arquivos não está liberado para o seu acesso. Você poderá enviar depois, pelo pedido.</p>`}
+    ${err ? `<span class="small" style="color:var(--bad);font-weight:600">${esc(err)}</span>` : ""}</div>`;
+}
+function alertasDe(s, r) { const R = RULES[s.codigo]; return R && R.alertas ? R.alertas(r, cfg()) : []; }
+function lerWizard() {
+  const w = S.wiz; if (!w) return;
+  $$("[data-f]", $("#formWizard") || document).forEach(el => {
+    const k = el.dataset.f;
+    if (el.type === "checkbox") { w.respostas[k] = $$(`input[data-f="${k}"]:checked`).map(x => x.value); }
+    else if (el.type === "radio") { if (el.checked) w.respostas[k] = el.value; }
+    else w.respostas[k] = el.value;
+  });
+  const a = $("#aceite"); if (a) w.aceite = a.checked;
+}
+function validarPasso() {
+  const w = S.wiz; const s = svcByCode(w.codigo); const r = w.respostas; const e = {};
+  if (w.passo <= 2) {
+    for (const f of s.campos.filter(f => f.passo === w.passo && campoVisivel(f, r))) {
+      const v = r[f.id];
+      if (f.obrigatorio && !valorPreenchido(v)) { e[f.id] = "Preencha este campo."; continue; }
+      if (f.tipo === "cnpj" && valorPreenchido(v) && !cnpjValido(v)) e[f.id] = "CNPJ inválido. Confira os 14 números.";
+      if (f.tipo === "money" && valorPreenchido(v) && parseMoney(v) < 0) e[f.id] = "Informe um valor válido.";
+    }
+    const R = RULES[s.codigo]; if (R && R.validar) { const x = R.validar(r); for (const k in x) if (s.campos.find(f => f.id === k && f.passo === w.passo)) e[k] = x[k]; }
+  }
+  if (w.passo === 4 && !w.aceite) e.aceite = "Marque a caixa para continuar.";
+  w.erros = e; return !Object.keys(e).length;
+}
+function montarPedido(status) {
+  const w = S.wiz; const s = svcByCode(w.codigo); const al = alertasDe(s, w.respostas);
+  return { id: w.pid, numero: w.pid, servico: s.codigo, servicoNome: s.nome, preco: s.gratuito ? 0 : Number(s.preco), prazoDias: s.prazoDias, status, passo: w.passo, respostas: w.respostas, documentos: w.docs, alertas: al.map(a => a.texto), analiseHumana: !!(s.analiseHumanaSempre || al.some(a => a.humano)), atualizadoEm: now() };
+}
+async function gravarPedido(pedido, histTexto) {
+  const novo = !(S.cadastro && S.cadastro.pedidos && S.cadastro.pedidos[pedido.id]);
+  const patch = { ...pedido };
+  if (novo) patch.criadoEm = now();
+  if (histTexto) patch.historico = { [hkey()]: { em: now(), status: pedido.status, texto: histTexto, por: "sistema" } };
+  return salvar(() => Store.atualizarCliente(Store.uid, { pedidos: { [pedido.id]: patch } }));
+}
+async function salvarRascunho(silencioso) {
+  lerWizard(); const w = S.wiz; if (!w.pid) w.pid = novoNumero();
+  const atual = S.cadastro && S.cadastro.pedidos && S.cadastro.pedidos[w.pid];
+  if (atual && atual.status !== "rascunho") return true;
+  const ok = await gravarPedido(montarPedido("rascunho"));
+  if (ok && !silencioso) { toast("Salvo. Você pode continuar quando quiser em Pedidos."); go("pedidos"); }
+  return ok;
+}
+async function proximoPasso() {
+  lerWizard(); if (!validarPasso()) { render(); const el = $(".err, .bad"); if (el) el.scrollIntoView({ block: "center" }); return; }
+  const w = S.wiz; const s = svcByCode(w.codigo);
+  if (w.passo < 4) { w.passo++; await salvarRascunho(true); render(); window.scrollTo(0, 0); return; }
+  if (!w.pid) w.pid = novoNumero();
+  if (s.gratuito) {
+    const ped = montarPedido("aguardando_pagamento");
+    const ok = await gravarPedido(ped, AUTO_MSG.aguardando_pagamento);
+    if (ok) await confirmarPagamento(Store.uid, w.pid, "gratuito", false, ped);
+    S.wiz = null; go("sucesso", { id: w.pid }); return;
+  }
+  const ok = await gravarPedido(montarPedido("aguardando_pagamento"), AUTO_MSG.aguardando_pagamento);
+  if (ok) { S.checkout = { pid: w.pid, metodo: "pix" }; S.wiz = null; go("checkout"); }
+}
+async function enviarArquivoDe(file, docTipo, destino) {
+  if (!file) return;
+  const okTipo = /\.(pdf|jpe?g|png)$/i.test(file.name) || ["application/pdf", "image/jpeg", "image/png"].includes(file.type);
+  if (!okTipo) { toast("Envie apenas PDF, JPG ou PNG."); return; }
+  if (file.size > 10 * 1024 * 1024) { toast("O arquivo passa de 10 MB. Envie uma versão menor."); return; }
+  toast("Enviando " + file.name + "…");
+  let r;
+  try { r = await Store.enviarArquivo(file, { dono: destino.dono, pedido: destino.pedido }); }
+  catch (e) {
+    console.error(e); const c = e && e.code;
+    toast(c === "quota_exceeded" ? "O espaço para arquivos está cheio. Avise a equipe Stillo." : c === "resource_exhausted" ? "Muitos envios seguidos. Aguarde alguns segundos e tente de novo." : "Não foi possível enviar o arquivo" + (e && e.message ? " (" + e.message + ")" : "") + ". Tente de novo.");
+    return;
+  }
+  const meta = { assetId: r.id, url: r.url, caminho: r.caminho || "", nome: file.name, tipo: file.type, tamanho: file.size, enviadoEm: now(), docTipo, origem: destino.origem || "cliente" };
+  try { await destino.salvar("a" + Date.now() + uid6(), meta); toast("Arquivo anexado: " + file.name); }
+  catch (e) { erroEscrita(e); }
+}
+function processarUpload(file, docTipo, final) {
+  if (S.modo === "admin" && final) {
+    const { uid, id } = S.params;
+    return enviarArquivoDe(file, "final", { origem: "stillo", dono: uid, pedido: id, salvar: (k, meta) => adminAtualizar(uid, id, { documentos: { [k]: meta } }, "Novo arquivo disponível: " + meta.nome) });
+  }
+  if (S.view === "wizard" && S.wiz) {
+    lerWizard(); if (!S.wiz.pid) S.wiz.pid = novoNumero();
+    return enviarArquivoDe(file, docTipo, { dono: Store.uid, pedido: S.wiz.pid, salvar: async (k, meta) => { S.wiz.docs[k] = meta; render(); } });
+  }
+  if (S.view === "pedido") {
+    const id = S.params.id;
+    return enviarArquivoDe(file, docTipo, { dono: Store.uid, pedido: id, salvar: async (k, meta) => {
+      const p = findPedido(Store.uid, id); const docs = { ...(p.documentos || {}), [k]: meta };
+      const patch = { documentos: { [k]: meta }, novoParaStillo: true, historico: { [hkey()]: { em: now(), status: p.status, texto: "Cliente enviou: " + meta.nome, por: "cliente" } } };
+      if (p.status === "aguardando_documentos" && !docsObrigatoriosFaltando({ ...p, documentos: docs }).length) { patch.status = "em_analise"; patch.pendencia = ""; patch.prazoFinal = addDiasUteis(now(), p.prazoDias || 3); patch.historico[hkey() + "s"] = { em: now(), status: "em_analise", texto: AUTO_MSG.em_analise, por: "sistema" }; }
+      else if (p.status === "aguardando_documentos") patch.pendencia = "Envie: " + docsObrigatoriosFaltando({ ...p, documentos: docs }).map(d => d.nome).join("; ") + ".";
+      await Store.atualizarCliente(Store.uid, { pedidos: { [id]: patch } });
+    } });
+  }
+}
+
+/* ====================== CLIENTE: PAGAMENTO ====================== */
+function qrSvg(t) {
+  try { const q = qrcode(0, "M"); q.addData(t); q.make(); return q.createSvgTag({ cellSize: 4, margin: 2, scalable: true }); }
+  catch (e) { return '<p class="small" style="color:#14243d">QR Code indisponível. Use o código abaixo.</p>'; }
+}
+function vCheckoutPix(p) {
+  const c = S.checkout; const pix = p.pix; const valido = pix && pix.copiaECola && new Date(pix.expiraEm) > new Date();
+  const img = pix && pix.imagem ? (String(pix.imagem).startsWith("data:") ? pix.imagem : "data:image/png;base64," + pix.imagem) : "";
+  return `<div class="wrap" style="padding-bottom:20px">
+    <button class="back" data-a="verPedido" data-id="${esc(p.id)}">← Ver pedido</button>
+    <div class="section stack">
+      <h1>Pagamento via Pix</h1>
+      <div class="card stack"><div class="row" style="justify-content:space-between"><span>${esc(p.servicoNome)}</span><b>${brl(p.preco)}</b></div><span class="small muted">Pedido ${esc(p.numero)} · recebedor: Stillo Gestão Contábil</span></div>
+      ${c.erro ? `<div class="alert bad"><p>${esc(c.erro)}</p><button class="btn sm" style="align-self:flex-start;margin-top:6px" data-a="gerarPix">Tentar de novo</button></div>` : ""}
+      ${valido ? `<div class="card flat pix">
+          <div class="pixqr">${img ? `<img alt="QR Code Pix" src="${esc(img)}">` : qrSvg(pix.copiaECola)}</div>
+          <p class="small muted" style="text-align:center">Abra o app do seu banco, escolha Pix e leia o QR Code. Ou copie o código abaixo.</p>
+          <div class="code">${esc(pix.copiaECola)}</div>
+          <button class="btn soft sm" data-a="copiar" data-t="${esc(pix.copiaECola)}">Copiar código Pix</button>
+          <span class="small muted">Válido até ${fmtDH(pix.expiraEm)}</span>
+        </div>
+        <div class="alert info"><b>Aguardando o pagamento</b><p>Assim que o Pix for pago, esta tela atualiza sozinha. Você também pode fechar e acompanhar em Pedidos.</p></div>
+        <button class="btn ghost block" data-a="verificarPix">Já paguei, verificar agora</button>`
+      : (c.erro ? "" : `<div class="loading">Gerando seu Pix…</div>`)}
+    </div></div>`;
+}
+let pollPix = null, pollInicio = 0;
+function iniciarPollPix(id) {
+  if (pollPix && pollPix.id === id) return; pararPollPix(); pollInicio = Date.now();
+  pollPix = { id, t: setInterval(async () => {
+    if (Date.now() - pollInicio > 30 * 60000) return pararPollPix();
+    try { const r = await Store.api("/api/pix/status?pedido=" + encodeURIComponent(id)); if (r.pago) await Store.recarregarTudo(); } catch (e) { }
+  }, 5000) };
+}
+function pararPollPix() { if (pollPix) { clearInterval(pollPix.t); pollPix = null; } }
+function vCheckout() {
+  const c = S.checkout; if (!c) return vPedidos(); const p = findPedido(Store.uid, c.pid); if (!p) return `<div class="loading">Preparando pagamento…</div>`;
+  if (Store.mode === "supabase") return vCheckoutPix(p);
+  const pixCode = "00020126TESTE-STILLO-MEI-" + p.numero + "-" + Math.round(p.preco * 100) + "-NAO-PAGUE-AMBIENTE-DE-TESTE";
+  return `<div class="wrap" style="padding-bottom:20px">
+    <button class="back" data-a="verPedido" data-id="${esc(p.id)}">← Ver pedido</button>
+    <div class="section stack">
+      <h1>Pagamento</h1>
+      <div class="card stack"><div class="row" style="justify-content:space-between"><span>${esc(p.servicoNome)}</span><b>${brl(p.preco)}</b></div><span class="small muted">Pedido ${esc(p.numero)}</span></div>
+      <div class="alert warn"><b>Ambiente de teste</b><p>Nenhum valor é cobrado. A integração com o gateway de pagamento (Pix e cartão com confirmação automática) entra na próxima etapa.</p></div>
+      <div class="tabs" role="tablist"><button role="tab" class="${c.metodo === "pix" ? "on" : ""}" data-a="metodo" data-m="pix">Pix</button><button role="tab" class="${c.metodo === "cartao" ? "on" : ""}" data-a="metodo" data-m="cartao">Cartão de crédito</button></div>
+      ${c.metodo === "pix" ? `<div class="card flat pix"><canvas id="pixqr" width="180" height="180" aria-label="QR Code de teste"></canvas><span class="small muted">QR Code de teste</span><div class="code">${esc(pixCode)}</div><button class="btn soft sm" data-a="copiar" data-t="${esc(pixCode)}">Copiar código</button></div>`
+      : `<form class="card flat stack" id="formCartao" novalidate>
+          <div class="field"><label for="cc_num">Número do cartão</label><input class="input" id="cc_num" inputmode="numeric" placeholder="4111 1111 1111 1111" autocomplete="off"></div>
+          <div class="field"><label for="cc_nome">Nome impresso</label><input class="input" id="cc_nome" placeholder="MARIA DA SILVA" autocomplete="off"></div>
+          <div class="row" style="flex-wrap:nowrap"><div class="field" style="flex:1"><label for="cc_val">Validade</label><input class="input" id="cc_val" placeholder="12/30" inputmode="numeric" autocomplete="off"></div><div class="field" style="flex:1"><label for="cc_cvv">CVV</label><input class="input" id="cc_cvv" placeholder="123" inputmode="numeric" autocomplete="off"></div></div>
+          <p class="small muted">Os dados do cartão não são gravados. No ambiente real, eles vão direto para o gateway.</p>
+        </form>`}
+      <button class="btn block" data-a="simularPagamento">Simular pagamento aprovado</button>
+      <button class="btn ghost block" data-a="verPedido" data-id="${esc(p.id)}">Pagar depois</button>
+    </div></div>`;
+}
+function desenharQR(cv, seed) {
+  const ctx = cv.getContext("2d"); const n = 29, sz = cv.width / n; let h = 0; for (const ch of String(seed)) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const rnd = () => (h = (h * 1664525 + 1013904223) >>> 0) / 4294967296;
+  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height); ctx.fillStyle = "#0d1b33";
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (rnd() > .55) ctx.fillRect(x * sz, y * sz, sz, sz);
+  const fin = (x, y) => { ctx.fillStyle = "#0d1b33"; ctx.fillRect(x * sz, y * sz, 7 * sz, 7 * sz); ctx.fillStyle = "#fff"; ctx.fillRect((x + 1) * sz, (y + 1) * sz, 5 * sz, 5 * sz); ctx.fillStyle = "#0d1b33"; ctx.fillRect((x + 2) * sz, (y + 2) * sz, 3 * sz, 3 * sz); };
+  fin(0, 0); fin(n - 7, 0); fin(0, n - 7);
+  ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.fillRect(cv.width / 2 - 44, cv.height / 2 - 14, 88, 28); ctx.fillStyle = "#b4342a"; ctx.font = "bold 16px sans-serif"; ctx.textAlign = "center"; ctx.fillText("TESTE", cv.width / 2, cv.height / 2 + 6);
+}
+function docsObrigatoriosFaltando(p) { const s = svcByCode(p.servico); if (!s) return []; const tem = new Set(Object.values(p.documentos || {}).map(d => d.docTipo)); return s.documentos.filter(d => d.obrigatorio && !tem.has(d.id)); }
+async function confirmarPagamento(uid, pid, metodo, porStillo, pObj) {
+  const p = pObj || findPedido(uid, pid); if (!p) return false;
+  const t = now(); const prox = docsObrigatoriosFaltando(p).length ? "aguardando_documentos" : "em_analise";
+  const k1 = hkey(), k2 = hkey() + "b";
+  const patch = { status: prox, pagoEm: t, prazoFinal: addDiasUteis(t, p.prazoDias || (svcByCode(p.servico) || {}).prazoDias || 3), naoLido: true,
+    pagamento: { metodo, valor: p.preco, confirmadoEm: t, comprovante: "CMP-" + p.numero, simulado: !!cfg().ambienteTeste, manual: !!porStillo },
+    historico: { [k1]: { em: t, status: "pagamento_confirmado", texto: AUTO_MSG.pagamento_confirmado + (porStillo ? " (confirmado pela equipe)" : ""), por: porStillo ? "stillo" : "sistema" }, [k2]: { em: t, status: prox, texto: AUTO_MSG[prox], por: "sistema" } } };
+  if (prox === "aguardando_documentos") patch.pendencia = "Envie: " + docsObrigatoriosFaltando(p).map(d => d.nome).join("; ") + ".";
+  return salvar(() => Store.atualizarCliente(uid, { pedidos: { [pid]: patch } }));
+}
+function vSucesso() {
+  const p = findPedido(Store.uid, S.params.id);
+  return `<div class="wrap"><div class="section stack" style="text-align:center;padding-top:40px">
+    <div style="width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h1>Pedido confirmado</h1>
+    <p class="muted">${p ? `Pedido ${esc(p.numero)} · ${esc(p.servicoNome)}` : ""}</p>
+    ${p && p.status === "aguardando_documentos" ? `<div class="alert warn" style="text-align:left"><b>Falta um passo</b><p>${esc(p.pendencia || "Envie os documentos pendentes para começarmos.")}</p></div>` : `<p>Nossa equipe já recebeu seu pedido. Você será avisado a cada atualização.</p>`}
+    ${p && p.prazoFinal ? `<p class="small muted">Previsão de conclusão: ${fmtData(p.prazoFinal)}${p.status === "aguardando_documentos" ? " (conta a partir do envio dos documentos)" : ""}</p>` : ""}
+    <button class="btn block" data-a="verPedido" data-id="${esc(S.params.id)}">Acompanhar pedido</button>
+    <button class="btn ghost block" data-a="home">Voltar ao início</button>
+  </div></div>`;
+}
+
+/* ====================== CLIENTE: MEUS PEDIDOS ====================== */
+function vPedidos() {
+  const ps = meusPedidos();
+  return `<div class="wrap"><div class="section stack">
+    <h1>Meus pedidos</h1>
+    ${ps.length ? ps.map(p => `<button class="card order" data-a="${p.status === "rascunho" ? "continuar" : "verPedido"}" data-id="${esc(p.id)}">
+      <div class="row">${chip(p.status)}${p.naoLido ? '<span class="chip t-bad">Novidade</span>' : ""}</div>
+      <h3>${esc(p.servicoNome)}</h3>
+      <div class="row small muted"><span>${esc(p.numero)}</span><span>${fmtData(p.criadoEm)}</span><b style="color:var(--ink)">${brl(p.preco)}</b></div>
+      ${p.status === "rascunho" ? '<span class="small" style="color:var(--brand);font-weight:600">Continuar preenchimento →</span>' : ""}
+      ${["aguardando_documentos", "aguardando_info"].includes(p.status) ? `<span class="small" style="color:var(--warn);font-weight:600">Precisa da sua ação</span>` : ""}
+    </button>`).join("") : `<div class="empty">Você ainda não contratou nenhum serviço.<br><br><button class="btn" data-a="home">Ver serviços</button></div>`}
+  </div></div>`;
+}
+function vPedido() {
+  const p = findPedido(Store.uid, S.params.id); if (!p) return `<div class="loading">Carregando pedido…</div>`;
+  const s = svcByCode(p.servico) || { documentos: [], campos: [] };
+  const docs = Object.entries(p.documentos || {});
+  const finais = docs.filter(([, d]) => d.origem === "stillo");
+  const enviados = docs.filter(([, d]) => d.origem !== "stillo");
+  const hist = Object.values(p.historico || {}).sort((a, b) => a.em.localeCompare(b.em));
+  const msgs = Object.values(p.mensagens || {}).sort((a, b) => a.em.localeCompare(b.em));
+  const falta = docsObrigatoriosFaltando(p);
+  const wa = dig(cfg().whatsapp);
+  return `<div class="wrap" style="padding-bottom:20px">
+    <button class="back" data-a="nav" data-v="pedidos">← Meus pedidos</button>
+    <div class="section stack">
+      <div class="row">${chip(p.status)}${p.analiseHumana ? '<span class="chip t-info">Com análise de contador</span>' : ""}</div>
+      <h1>${esc(p.servicoNome)}</h1>
+      ${p.status !== "cancelado" && p.status !== "aguardando_pagamento" ? `<div class="track">${TRACK.map(t => `<div class="${t.st.includes(p.status) ? "on" : ""}">${t.label}</div>`).join("")}</div>` : ""}
+      ${p.status === "aguardando_pagamento" ? `<div class="alert warn"><b>Falta concluir o pagamento</b><p>O serviço começa assim que o pagamento for confirmado.</p><button class="btn sm" style="align-self:flex-start;margin-top:6px" data-a="pagar" data-id="${esc(p.id)}">Pagar agora</button></div>` : ""}
+      ${p.status === "aguardando_documentos" || p.status === "aguardando_info" ? `<div class="alert warn"><b>${p.status === "aguardando_info" ? "Precisamos de uma informação sua" : "Faltam documentos"}</b><p>${esc(p.pendencia || (falta.length ? "Envie: " + falta.map(d => d.nome).join("; ") : "Veja as mensagens abaixo."))}</p></div>` : ""}
+      ${p.status === "concluido" ? `<div class="alert ok"><b>Serviço concluído</b><p>Os arquivos finais estão logo abaixo.</p></div>` : ""}
+      <div class="card flat stack"><dl class="kv">
+        <dt>Pedido</dt><dd>${esc(p.numero)}</dd><dt>Contratado em</dt><dd>${fmtData(p.criadoEm)}</dd>
+        <dt>Valor</dt><dd>${brl(p.preco)}${p.pagamento ? ` · pago via ${p.pagamento.metodo === "pix" ? "Pix" : p.pagamento.metodo === "cartao" ? "cartão" : esc(p.pagamento.metodo)}` : ""}</dd>
+        ${p.prazoFinal && ABERTOS.includes(p.status) ? `<dt>Previsão</dt><dd>${fmtData(p.prazoFinal)}</dd>` : ""}
+        ${p.concluidoEm ? `<dt>Concluído em</dt><dd>${fmtData(p.concluidoEm)}</dd>` : ""}
+      </dl>${p.pagamento ? `<button class="link" style="align-self:flex-start" data-a="comprovante" data-id="${esc(p.id)}">Ver comprovante</button>` : ""}</div>
+      ${finais.length ? `<div class="card stack"><h3>Arquivos da Stillo</h3>${finais.map(([, d]) => `<div class="file">${ICONS.doc}${linkArq(d)}<span class="small muted">${fmtData(d.enviadoEm)}</span></div>`).join("")}</div>` : ""}
+      ${p.status !== "cancelado" && p.status !== "concluido" ? `<div class="card flat stack"><h3>Seus documentos</h3>${s.documentos.map(d => blocoUpload(d, Object.fromEntries(enviados), "", false)).join("")}</div>` : (enviados.length ? `<div class="card flat stack"><h3>Documentos enviados</h3>${enviados.map(([, d]) => `<div class="file">${ICONS.doc}${linkArq(d)}</div>`).join("")}</div>` : "")}
+      <div class="card flat stack"><h3>Mensagens</h3>
+        <div class="msgs">${msgs.length ? msgs.map(m => `<div class="msg ${m.de === "cliente" ? "me" : "them"}">${esc(m.texto)}<small>${m.de === "cliente" ? "Você" : "Equipe Stillo"} · ${fmtDH(m.em)}</small></div>`).join("") : '<p class="small muted">Nenhuma mensagem ainda.</p>'}</div>
+        ${p.status !== "cancelado" ? `<form class="row" id="formMsg" data-id="${esc(p.id)}" style="flex-wrap:nowrap"><label for="msgTxt" class="small" hidden>Mensagem</label><input class="input" id="msgTxt" placeholder="${p.status === "aguardando_info" ? "Responda aqui" : "Escreva para a equipe"}" autocomplete="off"><button class="btn sm" type="submit">Enviar</button></form>` : ""}
+        ${wa ? `<a class="btn ghost sm" style="align-self:flex-start" href="https://wa.me/${wa}?text=${encodeURIComponent("Olá! Sobre o pedido " + p.numero + " (" + p.servicoNome + ")")}" target="_blank" rel="noopener">Falar no WhatsApp</a>` : ""}
+        ${cfg().emailAtendimento ? `<p class="small muted">Ou escreva para <a href="mailto:${esc(cfg().emailAtendimento)}?subject=${encodeURIComponent("Pedido " + p.numero)}">${esc(cfg().emailAtendimento)}</a></p>` : ""}
+      </div>
+      <div class="card flat stack"><h3>Histórico</h3><div class="timeline">${hist.map(h => `<div><b>${esc((STATUS[h.status] || {}).label || "Atualização")}</b><br><span class="muted small">${fmtDH(h.em)}</span>${h.texto ? `<br>${esc(h.texto)}` : ""}</div>`).join("")}</div></div>
+      ${p.status === "aguardando_pagamento" ? `<button class="btn danger block" data-a="cancelarCliente" data-id="${esc(p.id)}">Cancelar pedido</button>` : ""}
+      ${ABERTOS.includes(p.status) && !p.cancelamentoSolicitado ? `<button class="link" style="align-self:center" data-a="solicitarCancelamento" data-id="${esc(p.id)}">Solicitar cancelamento</button>` : ""}
+      ${p.cancelamentoSolicitado && p.status !== "cancelado" ? `<p class="small muted" style="text-align:center">Cancelamento solicitado. A equipe vai responder pelas mensagens.</p>` : ""}
+    </div></div>`;
+}
+function vDocumentos() {
+  const ps = meusPedidos().filter(p => Object.keys(p.documentos || {}).length);
+  return `<div class="wrap"><div class="section stack"><h1>Documentos</h1><p class="muted">Tudo o que você enviou e recebeu, separado por pedido.</p>
+    ${ps.length ? ps.map(p => `<div class="card flat stack"><div class="row" style="justify-content:space-between"><b>${esc(p.servicoNome)}</b><button class="link small" data-a="verPedido" data-id="${esc(p.id)}">${esc(p.numero)}</button></div>
+      ${Object.values(p.documentos).sort((a, b) => a.enviadoEm.localeCompare(b.enviadoEm)).map(d => `<div class="file">${ICONS.doc}${linkArq(d)}<span class="chip ${d.origem === "stillo" ? "t-ok" : "t-neutral"}">${d.origem === "stillo" ? "Da Stillo" : "Enviado por você"}</span></div>`).join("")}</div>`).join("")
+      : `<div class="empty">Nenhum documento ainda. Eles aparecem aqui quando você contrata um serviço.</div>`}
+    <p class="small muted">Para excluir um documento, use “Solicitar exclusão de dados” em Conta. Alguns documentos precisam ser guardados pelo prazo exigido pelas normas contábeis.</p>
+  </div></div>`;
+}
+function vConta() {
+  const p = (S.cadastro && S.cadastro.perfil) || null;
+  const em = cfg().emailAtendimento; const wa = dig(cfg().whatsapp);
+  return `<div class="wrap"><div class="section stack"><h1>Conta</h1>
+    <div class="card flat stack"><dl class="kv"><dt>Entrou com</dt><dd>${esc(Store.email)}</dd></dl>${Store.mode === "supabase" ? `<button class="btn ghost sm" style="align-self:flex-start" data-a="sair">Sair</button>` : ""}</div>
+    ${p ? `<div class="card flat stack"><dl class="kv"><dt>Nome</dt><dd>${esc(p.nome)}</dd><dt>CPF</dt><dd>${esc(p.cpf)}</dd><dt>CNPJ</dt><dd>${esc(p.cnpj || "—")}</dd><dt>Celular</dt><dd>${esc(p.telefone)}</dd><dt>E-mail</dt><dd>${esc(p.email)}</dd></dl><button class="btn ghost sm" style="align-self:flex-start" data-a="editarCadastro">Editar dados</button></div>`
+      : `<div class="card flat stack"><p>Você ainda não preencheu seus dados.</p><button class="btn" data-a="editarCadastro">Preencher agora</button></div>`}
+    <div class="card flat stack"><h3>Privacidade</h3><p class="small muted">Seus dados são usados apenas para executar os serviços contratados.</p>
+      <div class="row"><button class="btn ghost sm" data-a="verTermos">Termos e privacidade</button>${p ? `<button class="btn ghost sm" data-a="pedirExclusao">Solicitar exclusão de dados</button>` : ""}</div>
+      ${p && p.exclusaoSolicitadaEm ? `<p class="small">Exclusão solicitada em ${fmtData(p.exclusaoSolicitadaEm)}. A equipe vai responder.</p>` : ""}</div>
+    <div class="card flat stack"><h3>Atendimento</h3>${em ? `<p>E-mail: <a href="mailto:${esc(em)}">${esc(em)}</a></p>` : ""}${wa ? `<a class="btn ghost sm" style="align-self:flex-start" href="https://wa.me/${wa}" target="_blank" rel="noopener">Falar no WhatsApp</a>` : ""}</div>
+  </div></div>`;
+}
+function termosHTML() {
+  return `<div class="stack"><h2>Termos de uso e privacidade</h2><div class="alert warn"><p>Minuta para o MVP. Revisar com o jurídico antes do lançamento.</p></div>
+  <p><b>Quem somos.</b> Stillo Gestão Contábil, São Bernardo do Campo (SP), responsável pelos serviços contratados nesta plataforma. Contato: ${esc(cfg().emailAtendimento || "contato@stillogestao.com.br")}.</p>
+  <p><b>O que fazemos com seus dados.</b> Usamos nome, CPF, CNPJ, contatos, respostas e documentos apenas para executar o serviço contratado, cumprir obrigações legais e falar com você sobre o pedido (LGPD, art. 7º, II e V).</p>
+  <p><b>Senhas.</b> Nunca pedimos sua senha gov.br. O acesso aos sistemas oficiais é feito por procuração eletrônica ou orientação da equipe.</p>
+  <p><b>Prazos e órgãos públicos.</b> Os prazos contam a partir do pagamento e do envio dos documentos. Decisões e prazos da Receita Federal, PGFN e Prefeitura não dependem da Stillo.</p>
+  <p><b>Guarda e exclusão.</b> Documentos ficam guardados pelo prazo exigido pelas normas contábeis e fiscais. Depois disso, você pode pedir a exclusão.</p>
+  <p><b>Cancelamento.</b> Antes do início da execução, o cancelamento tem reembolso integral. Depois, a equipe analisa conforme o que já foi feito.</p>
+  <button class="btn block" data-a="fecharModal">Entendi</button></div>`;
+}
+function comprovanteHTML(p, cli) {
+  return `<h2>Comprovante de pagamento</h2>${p.pagamento.simulado ? '<p style="color:#b4342a;font-weight:700">AMBIENTE DE TESTE: pagamento simulado, sem valor fiscal.</p>' : ""}
+  <dl class="kv"><dt>Comprovante</dt><dd>${esc(p.pagamento.comprovante)}</dd><dt>Pedido</dt><dd>${esc(p.numero)}</dd><dt>Serviço</dt><dd>${esc(p.servicoNome)}</dd><dt>Cliente</dt><dd>${esc(cli && cli.nome || "")}</dd><dt>Valor</dt><dd>${brl(p.pagamento.valor)}</dd><dt>Forma</dt><dd>${esc(p.pagamento.metodo)}</dd><dt>Data</dt><dd>${fmtDH(p.pagamento.confirmadoEm)}</dd><dt>Recebedor</dt><dd>Stillo Gestão Contábil</dd></dl>`;
+}
+
+/* ====================== PAINEL STILLO ====================== */
+function renderAdmin() {
+  const tabs = [["pedidos", "Pedidos"], ["servicos", "Serviços"], ["financeiro", "Financeiro"], ["clientes", "Clientes"], ["indicadores", "Indicadores"], ["ajustes", "Ajustes"]];
+  const novos = todosPedidos().filter(p => p.novoParaStillo && p.status !== "rascunho").length;
+  const V = { pedidos: aPedidos, pedido: aPedido, servicos: aServicos, servico: aServico, financeiro: aFinanceiro, clientes: aClientes, cliente: aCliente, indicadores: aIndicadores, ajustes: aAjustes };
+  const base = { pedido: "pedidos", servico: "servicos", cliente: "clientes" }[S.adminTab] || S.adminTab;
+  return `<div class="wrap wide"><div class="tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" class="${base === k ? "on" : ""}" data-a="adminTab" data-t="${k}">${l}${k === "pedidos" && novos ? ` <span class="chip t-bad">${novos}</span>` : ""}</button>`).join("")}</div>
+  <div class="section">${(V[S.adminTab] || aPedidos)()}</div></div>`;
+}
+function atrasado(p) { return ABERTOS.includes(p.status) && p.prazoFinal && new Date(p.prazoFinal) < new Date(); }
+function aPedidos() {
+  const f = S.filtros; let ps = todosPedidos();
+  if (f.status === "abertos") ps = ps.filter(p => ABERTOS.includes(p.status) || p.status === "aguardando_pagamento");
+  else if (f.status === "atrasados") ps = ps.filter(atrasado);
+  else if (f.status === "acao") ps = ps.filter(p => p.novoParaStillo);
+  else if (f.status) ps = ps.filter(p => p.status === f.status);
+  else ps = ps.filter(p => p.status !== "rascunho");
+  if (f.servico) ps = ps.filter(p => p.servico === f.servico);
+  if (f.texto) { const t = f.texto.toLowerCase(); ps = ps.filter(p => (p._cliente + " " + p.numero + " " + (p.respostas && p.respostas.cnpj || "")).toLowerCase().includes(t)); }
+  if (f.de) ps = ps.filter(p => (p.criadoEm || "") >= f.de);
+  if (f.ate) ps = ps.filter(p => (p.criadoEm || "").slice(0, 10) <= f.ate);
+  return `<div class="stack">
+    <div class="filters">
+      <div class="field"><label for="f_status" class="small">Status</label><select class="input" id="f_status" data-filtro="status"><option value="abertos" ${f.status === "abertos" ? "selected" : ""}>Em aberto</option><option value="acao" ${f.status === "acao" ? "selected" : ""}>Com novidade do cliente</option><option value="atrasados" ${f.status === "atrasados" ? "selected" : ""}>Atrasados</option><option value="" ${f.status === "" ? "selected" : ""}>Todos (sem rascunhos)</option>${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${f.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></div>
+      <div class="field"><label for="f_servico" class="small">Serviço</label><select class="input" id="f_servico" data-filtro="servico"><option value="">Todos</option>${cfg().servicos.map(s => `<option value="${s.codigo}" ${f.servico === s.codigo ? "selected" : ""}>${esc(s.nome)}</option>`).join("")}</select></div>
+      <div class="field"><label for="f_texto" class="small">Cliente, pedido ou CNPJ</label><input class="input" id="f_texto" data-filtro="texto" value="${esc(f.texto)}" placeholder="Buscar"></div>
+      <div class="field"><label for="f_de" class="small">De</label><input class="input" type="date" id="f_de" data-filtro="de" value="${esc(f.de)}"></div>
+      <div class="field"><label for="f_ate" class="small">Até</label><input class="input" type="date" id="f_ate" data-filtro="ate" value="${esc(f.ate)}"></div>
+    </div>
+    <p class="small muted">${ps.length} pedido${ps.length === 1 ? "" : "s"}</p>
+    <div class="tablewrap"><table><thead><tr><th>Pedido</th><th>Cliente</th><th>Serviço</th><th>Status</th><th>Responsável</th><th>Previsão</th><th class="num">Valor</th></tr></thead><tbody>
+    ${ps.length ? ps.map(p => `<tr class="click" data-a="adminPedido" data-uid="${esc(p._uid)}" data-id="${esc(p.id)}"><td><b>${esc(p.numero)}</b>${p.novoParaStillo ? ' <span class="chip t-bad">Novo</span>' : ""}<br><span class="small muted">${fmtData(p.criadoEm)}</span></td><td>${esc(p._cliente)}</td><td>${esc(p.servicoNome)}${p.analiseHumana ? '<br><span class="chip t-info">Análise humana</span>' : ""}</td><td>${chip(p.status)}</td><td>${esc(p.responsavel || "—")}</td><td>${p.prazoFinal ? `<span style="${atrasado(p) ? "color:var(--bad);font-weight:700" : ""}">${fmtData(p.prazoFinal)}${atrasado(p) ? " · atrasado" : ""}</span>` : "—"}</td><td class="num">${brl(p.preco)}</td></tr>`).join("") : `<tr><td colspan="7" class="empty">Nenhum pedido com esses filtros.</td></tr>`}
+    </tbody></table></div></div>`;
+}
+function aPedido() {
+  const { uid, id } = S.params; const c = S.clientes.find(x => x.id === uid); const p = c && c.data.pedidos && c.data.pedidos[id];
+  if (!p) return `<div class="empty">Pedido não encontrado. <button class="link" data-a="adminTab" data-t="pedidos">Voltar</button></div>`;
+  const s = svcByCode(p.servico) || { campos: [], documentos: [] }; const perfil = c.data.perfil || {};
+  const notas = Object.values(((S.interno[uid] || {}).pedidos || {})[id] && S.interno[uid].pedidos[id].notas || {}).sort((a, b) => a.em.localeCompare(b.em));
+  const hist = Object.values(p.historico || {}).sort((a, b) => b.em.localeCompare(a.em));
+  const msgs = Object.values(p.mensagens || {}).sort((a, b) => a.em.localeCompare(b.em));
+  const docs = Object.values(p.documentos || {});
+  return `<button class="back" data-a="adminTab" data-t="pedidos" style="padding-top:0">← Pedidos</button>
+  <div class="stack" style="margin-top:12px">
+    <div class="row" style="justify-content:space-between"><div class="stack" style="gap:4px"><div class="row">${chip(p.status)}${p.analiseHumana ? '<span class="chip t-info">Análise humana</span>' : ""}${atrasado(p) ? '<span class="chip t-bad">Atrasado</span>' : ""}${p.cancelamentoSolicitado && p.status !== "cancelado" ? '<span class="chip t-bad">Cliente pediu cancelamento</span>' : ""}</div><h2>${esc(p.numero)} · ${esc(p.servicoNome)}</h2><span class="muted small">${esc(perfil.nome || "")} · contratado em ${fmtDH(p.criadoEm)}</span></div><b style="font-size:1.3rem">${brl(p.preco)}</b></div>
+    <div class="grid2">
+      <div class="stack">
+        ${p.alertas && p.alertas.length ? `<div class="alert warn"><b>Avisos do formulário</b>${p.alertas.map(a => `<p>${esc(a)}</p>`).join("")}</div>` : ""}
+        <div class="card flat stack"><h3>Respostas do cliente</h3><dl class="kv">${s.campos.filter(f => valorPreenchido((p.respostas || {})[f.id])).map(f => `<dt>${esc(f.label)}</dt><dd>${esc(fmtResp(f, p.respostas[f.id]))}</dd>`).join("") || "<dd>—</dd>"}</dl></div>
+        <div class="card flat stack"><h3>Documentos</h3>${docs.length ? docs.map(d => `<div class="file">${ICONS.doc}${linkArq(d)}<span class="chip ${d.origem === "stillo" ? "t-ok" : "t-neutral"}">${d.origem === "stillo" ? "Entrega Stillo" : esc(((s.documentos.find(x => x.id === d.docTipo)) || {}).nome || "Cliente")}</span></div>`).join("") : '<p class="small muted">Nenhum documento.</p>'}
+          ${docsObrigatoriosFaltando(p).length ? `<p class="small" style="color:var(--warn);font-weight:600">Faltando: ${esc(docsObrigatoriosFaltando(p).map(d => d.nome).join("; "))}</p>` : ""}
+          ${Store.podeEnviarArquivo() ? `<span class="btn soft sm filebtn">${ICONS.clipe}Anexar arquivo final<input type="file" accept="application/pdf,image/jpeg,image/png" data-up="final" data-final="1" aria-label="Anexar arquivo final"></span>` : ""}</div>
+        <div class="card flat stack"><h3>Mensagens com o cliente</h3><div class="msgs">${msgs.length ? msgs.map(m => `<div class="msg ${m.de === "stillo" ? "me" : "them"}">${esc(m.texto)}<small>${m.de === "stillo" ? "Stillo" : "Cliente"} · ${fmtDH(m.em)}</small></div>`).join("") : '<p class="small muted">Sem mensagens.</p>'}</div>
+          <form class="row" id="formMsgAdmin" style="flex-wrap:nowrap"><label for="msgAdm" hidden>Mensagem</label><input class="input" id="msgAdm" placeholder="Mensagem para o cliente" autocomplete="off"><button class="btn sm" type="submit">Enviar</button></form></div>
+        <div class="card flat stack"><h3>Histórico</h3><div class="timeline">${hist.map(h => `<div><b>${esc((STATUS[h.status] || {}).label || "Atualização")}</b> <span class="muted small">· ${esc(h.por || "")} · ${fmtDH(h.em)}</span>${h.texto ? `<br>${esc(h.texto)}` : ""}</div>`).join("")}</div></div>
+      </div>
+      <div class="stack">
+        <div class="card stack"><h3>Atualizar pedido</h3>
+          <div class="field"><label for="a_status">Status</label><select class="input" id="a_status">${Object.entries(STATUS).filter(([k]) => k !== "rascunho").map(([k, v]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${v.label}</option>`).join("")}</select></div>
+          <div class="field"><label for="a_resp">Responsável</label><select class="input" id="a_resp"><option value="">Sem responsável</option>${(cfg().equipe || []).map(n => `<option ${p.responsavel === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></div>
+          <div class="field"><label for="a_msg">Mensagem ao cliente (opcional)</label><textarea class="input" id="a_msg" placeholder="Se vazio, enviamos a mensagem automática do status."></textarea></div>
+          <button class="btn" data-a="adminSalvarStatus">Salvar alterações</button>
+          ${p.status === "aguardando_pagamento" ? `<button class="btn soft" data-a="adminConfirmarPgto">Confirmar pagamento manualmente</button>` : ""}</div>
+        <div class="card stack"><h3>Pedir algo ao cliente</h3><div class="field"><label for="a_pend">O que precisa ser enviado ou corrigido?</label><textarea class="input" id="a_pend" placeholder="Ex.: A foto do RG ficou ilegível. Envie de novo, por favor."></textarea></div><button class="btn soft" data-a="adminPendencia">Enviar pedido ao cliente</button></div>
+        <div class="card flat stack"><h3>Cliente</h3><dl class="kv"><dt>Nome</dt><dd>${esc(perfil.nome || "—")}</dd><dt>CPF</dt><dd>${esc(perfil.cpf || "—")}</dd><dt>CNPJ</dt><dd>${esc((p.respostas && p.respostas.cnpj) || perfil.cnpj || "—")}</dd><dt>Celular</dt><dd>${esc(perfil.telefone || "—")}</dd><dt>E-mail</dt><dd>${esc(perfil.email || "—")}</dd></dl>
+          ${dig(perfil.telefone).length >= 10 ? `<a class="btn ghost sm" style="align-self:flex-start" href="https://wa.me/55${dig(perfil.telefone)}?text=${encodeURIComponent("Olá, " + (perfil.nome || "").split(" ")[0] + "! Aqui é da Stillo, sobre o pedido " + p.numero + ".")}" target="_blank" rel="noopener">WhatsApp do cliente</a>` : ""}</div>
+        <div class="card flat stack"><h3>Pagamento</h3>${p.pagamento ? `<dl class="kv"><dt>Forma</dt><dd>${esc(p.pagamento.metodo)}${p.pagamento.simulado ? " (teste)" : ""}${p.pagamento.manual ? " · manual" : ""}</dd><dt>Data</dt><dd>${fmtDH(p.pagamento.confirmadoEm)}</dd><dt>Comprovante</dt><dd>${esc(p.pagamento.comprovante)}</dd>${p.reembolso ? `<dt>Reembolso</dt><dd>${esc(p.reembolso.situacao)} · ${brl(p.reembolso.valor)}</dd>` : ""}</dl>` : '<p class="small muted">Ainda não pago.</p>'}
+          ${p.pagamento && !p.reembolso && p.status !== "concluido" ? `<button class="btn danger sm" style="align-self:flex-start" data-a="adminCancelarReembolso">Cancelar com reembolso</button>` : ""}
+          ${p.reembolso && p.reembolso.situacao === "Pendente" ? `<button class="btn soft sm" style="align-self:flex-start" data-a="adminReembolsoFeito">Marcar reembolso como feito</button>` : ""}</div>
+        <div class="card flat stack"><h3>Observações internas</h3><p class="small muted">Só a equipe vê.</p>${notas.map(n => `<div class="small"><b>${esc(n.por || "Equipe")}</b> · ${fmtDH(n.em)}<br>${esc(n.texto)}</div>`).join("")}
+          <form class="stack" id="formNota" style="gap:8px"><label for="notaTxt" hidden>Observação</label><textarea class="input" id="notaTxt" placeholder="Anotação interna"></textarea><button class="btn ghost sm" type="submit" style="align-self:flex-start">Salvar observação</button></form></div>
+      </div>
+    </div></div>`;
+}
+async function adminAtualizar(uid, id, patch, msgCliente, statusHist) {
+  const t = now();
+  const full = { ...patch, naoLido: true, novoParaStillo: false, atualizadoEm: t };
+  if (statusHist || msgCliente) full.historico = { [hkey()]: { em: t, status: statusHist || patch.status || findPedido(uid, id).status, texto: msgCliente || AUTO_MSG[statusHist] || "", por: "stillo" } };
+  if (msgCliente) full.mensagens = { ["m" + Date.now() + uid6()]: { em: t, de: "stillo", texto: msgCliente } };
+  return salvar(() => Store.atualizarCliente(uid, { pedidos: { [id]: full } }));
+}
+function aServicos() {
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><h2>Catálogo de serviços</h2>${!S.configSalva ? `<button class="btn sm" data-a="salvarCatalogoInicial">Salvar catálogo inicial</button>` : ""}</div>
+    <p class="small muted">Preços, prazos, textos, documentos e perguntas são editáveis aqui, sem mexer no código.</p>
+    <div class="tablewrap"><table><thead><tr><th>Código</th><th>Serviço</th><th>Categoria</th><th class="num">Preço</th><th class="num">Prazo</th><th>Situação</th></tr></thead><tbody>
+    ${cfg().servicos.map(s => `<tr class="click" data-a="adminServico" data-c="${esc(s.codigo)}"><td>${esc(s.codigo)}</td><td><b>${esc(s.nome)}</b>${s.orcamentoPersonalizado ? '<br><span class="chip t-info">Aceita orçamento</span>' : ""}</td><td>${esc(s.categoria)}</td><td class="num">${s.gratuito ? "Grátis" : brl(s.preco)}</td><td class="num">${s.prazoDias} d.u.</td><td>${s.ativo ? '<span class="chip t-ok">Ativo</span>' : '<span class="chip t-neutral">Desativado</span>'}</td></tr>`).join("")}
+    </tbody></table></div></div>`;
+}
+function aServico() {
+  const s = svcByCode(S.params.c); if (!s) return aServicos();
+  const t = (id, l, v, extra = "") => `<div class="field"><label for="s_${id}">${l}</label><input class="input" id="s_${id}" value="${esc(v)}" ${extra}></div>`;
+  const ta = (id, l, v, help = "") => `<div class="field"><label for="s_${id}">${l}</label>${help ? `<span class="help">${help}</span>` : ""}<textarea class="input" id="s_${id}">${esc(v)}</textarea></div>`;
+  return `<button class="back" data-a="adminTab" data-t="servicos" style="padding-top:0">← Serviços</button>
+  <form class="stack" id="formServico" style="margin-top:12px" novalidate>
+    <h2>${esc(s.codigo)} · ${esc(s.nome)}</h2>
+    <div class="grid2"><div class="stack">
+      <div class="card flat stack"><h3>Página do serviço</h3>
+        ${t("nome", "Nome", s.nome)}${t("categoria", "Categoria", s.categoria)}${t("resumo", "Resumo (aparece no card)", s.resumo)}
+        ${ta("descricao", "Explicação", s.descricao)}${ta("paraQuem", "Para quem é indicado", s.paraQuem)}
+        ${ta("incluso", "O que está incluído", s.incluso.join("\n"), "Um item por linha.")}
+        ${ta("documentos", "Documentos", s.documentos.map(d => d.nome + (d.obrigatorio ? " | obrigatório" : "")).join("\n"), "Um por linha. Escreva “| obrigatório” no fim quando for exigido.")}
+        ${ta("notaPreco", "Observação sobre o preço (opcional)", s.notaPreco || "")}
+      </div>
+      <div class="card flat stack"><h3>Perguntas do formulário</h3><p class="small muted">Edite o texto, a ajuda e se a pergunta é obrigatória. A lógica de cada campo fica no sistema.</p>
+        ${s.campos.map((f, i) => `<div class="stack" style="gap:6px;padding:10px;border:1px solid var(--line);border-radius:10px"><span class="small muted">Passo ${f.passo} · ${esc(f.tipo)} · ${esc(f.id)}</span>
+          <label class="small" for="cl_${i}">Pergunta</label><input class="input" id="cl_${i}" data-campo="${i}" data-k="label" value="${esc(f.label)}">
+          <label class="small" for="ca_${i}">Ajuda</label><input class="input" id="ca_${i}" data-campo="${i}" data-k="ajuda" value="${esc(f.ajuda || "")}">
+          ${f.opcoes ? `<label class="small" for="co_${i}">Opções (uma por linha)</label><textarea class="input" id="co_${i}" data-campo="${i}" data-k="opcoes" style="min-height:70px">${esc(f.opcoes.join("\n"))}</textarea>` : ""}
+          <label class="switch small"><input type="checkbox" data-campo="${i}" data-k="obrigatorio" ${f.obrigatorio ? "checked" : ""} ${f.id === "cnpj" ? "disabled" : ""}> Obrigatória</label></div>`).join("")}
+      </div></div>
+    <div class="stack">
+      <div class="card stack"><h3>Venda</h3>
+        ${t("preco", "Preço (R$)", String(s.preco).replace(".", ","), 'inputmode="decimal"')}${t("prazoDias", "Prazo (dias úteis)", s.prazoDias, 'inputmode="numeric"')}
+        <label class="switch"><input type="checkbox" id="s_ativo" ${s.ativo ? "checked" : ""}> Serviço ativo no catálogo</label>
+        <label class="switch"><input type="checkbox" id="s_gratuito" ${s.gratuito ? "checked" : ""}> Serviço gratuito</label>
+        <label class="switch"><input type="checkbox" id="s_orcamento" ${s.orcamentoPersonalizado ? "checked" : ""}> Aceita orçamento personalizado</label>
+        <label class="switch"><input type="checkbox" id="s_humano" ${s.analiseHumanaSempre ? "checked" : ""}> Sempre exige análise de contador</label></div>
+      <div class="card flat stack">${ta("regrasHumano", "Critérios para atendimento humano", s.regrasHumano || "")}</div>
+      <button class="btn" type="submit">Salvar serviço</button>
+    </div></div></form>`;
+}
+function filtraPeriodo(ps, de, ate, campo) { return ps.filter(p => { const d = (p[campo] || "").slice(0, 10); return (!de || d >= de) && (!ate || d <= ate) && d; }); }
+function aFinanceiro() {
+  const todos = todosPedidos().filter(p => p.status !== "rascunho");
+  const pagos = filtraPeriodo(todos.filter(p => p.pagamento), S.finDe, S.finAte, "pagoEm");
+  const pend = todos.filter(p => p.status === "aguardando_pagamento");
+  const reemb = pagos.filter(p => p.reembolso);
+  const receita = pagos.reduce((a, p) => a + (p.pagamento.valor || 0), 0) - reemb.reduce((a, p) => a + (p.reembolso.valor || 0), 0);
+  const porSvc = cfg().servicos.map(s => { const x = pagos.filter(p => p.servico === s.codigo); return { s, n: x.length, v: x.reduce((a, p) => a + (p.pagamento.valor || 0), 0) }; });
+  return `<div class="stack">
+    <div class="row"><div class="field"><label for="fin_de" class="small">De</label><input class="input" type="date" id="fin_de" value="${esc(S.finDe)}" data-fin="finDe"></div><div class="field"><label for="fin_ate" class="small">Até</label><input class="input" type="date" id="fin_ate" value="${esc(S.finAte)}" data-fin="finAte"></div><span class="spacer"></span>${Store.podeBaixar() ? `<button class="btn ghost sm" data-a="exportarCSV">Exportar CSV</button>` : ""}</div>
+    <div class="tiles">
+      <div class="tile"><b>${brl(receita)}</b><span>Receita líquida no período</span></div>
+      <div class="tile"><b>${pagos.length}</b><span>Pagamentos confirmados</span></div>
+      <div class="tile"><b>${brl(pagos.length ? receita / pagos.length : 0)}</b><span>Ticket médio</span></div>
+      <div class="tile"><b>${pend.length}</b><span>Aguardando pagamento (${brl(pend.reduce((a, p) => a + p.preco, 0))})</span></div>
+      <div class="tile"><b>${reemb.length}</b><span>Reembolsos (${brl(reemb.reduce((a, p) => a + p.reembolso.valor, 0))})</span></div>
+    </div>
+    <h3>Por serviço</h3>
+    <div class="tablewrap"><table><thead><tr><th>Serviço</th><th class="num">Vendidos</th><th class="num">Receita</th></tr></thead><tbody>${porSvc.map(x => `<tr><td>${esc(x.s.nome)}</td><td class="num">${x.n}</td><td class="num">${brl(x.v)}</td></tr>`).join("")}</tbody></table></div>
+    <h3>Pagamentos</h3>
+    <div class="tablewrap"><table><thead><tr><th>Data</th><th>Pedido</th><th>Cliente</th><th>Forma</th><th class="num">Valor</th></tr></thead><tbody>${pagos.length ? pagos.map(p => `<tr class="click" data-a="adminPedido" data-uid="${esc(p._uid)}" data-id="${esc(p.id)}"><td>${fmtData(p.pagoEm)}</td><td>${esc(p.numero)}</td><td>${esc(p._cliente)}</td><td>${esc(p.pagamento.metodo)}${p.pagamento.simulado ? " (teste)" : ""}${p.reembolso ? " · reembolso " + esc(p.reembolso.situacao.toLowerCase()) : ""}</td><td class="num">${brl(p.pagamento.valor)}</td></tr>`).join("") : `<tr><td colspan="5" class="empty">Sem pagamentos no período.</td></tr>`}</tbody></table></div>
+    <p class="small muted">Pagamentos marcados como “teste” são simulados e não representam receita real.</p>
+  </div>`;
+}
+function aClientes() {
+  const t = S.buscaCli.toLowerCase();
+  const cs = S.clientes.filter(c => c.data.perfil).filter(c => !t || JSON.stringify(c.data.perfil).toLowerCase().includes(t));
+  return `<div class="stack"><div class="field"><label for="buscaCli" class="small">Buscar cliente</label><input class="input" id="buscaCli" value="${esc(S.buscaCli)}" placeholder="Nome, CPF, CNPJ ou e-mail"></div>
+    <div class="tablewrap"><table><thead><tr><th>Cliente</th><th>CNPJ</th><th>Contato</th><th class="num">Pedidos</th><th class="num">Total pago</th></tr></thead><tbody>
+    ${cs.length ? cs.map(c => { const ps = Object.values(c.data.pedidos || {}).filter(p => p.status !== "rascunho" && !p.excluido); const tot = ps.filter(p => p.pagamento).reduce((a, p) => a + p.pagamento.valor, 0); return `<tr class="click" data-a="adminCliente" data-uid="${esc(c.id)}"><td><b>${esc(c.data.perfil.nome)}</b>${c.data.perfil.exclusaoSolicitadaEm ? '<br><span class="chip t-bad">Pediu exclusão</span>' : ""}<br><span class="small muted">desde ${fmtData(c.data.perfil.criadoEm)}</span></td><td>${esc(c.data.perfil.cnpj || "—")}</td><td>${esc(c.data.perfil.telefone)}<br><span class="small muted">${esc(c.data.perfil.email)}</span></td><td class="num">${ps.length}</td><td class="num">${brl(tot)}</td></tr>`; }).join("") : `<tr><td colspan="5" class="empty">Nenhum cliente encontrado.</td></tr>`}
+    </tbody></table></div></div>`;
+}
+function aCliente() {
+  const c = S.clientes.find(x => x.id === S.params.uid); if (!c) return aClientes();
+  const p = c.data.perfil || {}; const ps = Object.values(c.data.pedidos || {}).filter(x => !x.excluido).sort((a, b) => b.criadoEm.localeCompare(a.criadoEm));
+  const notas = Object.values((S.interno[c.id] || {}).notas || {}).sort((a, b) => a.em.localeCompare(b.em));
+  const docs = ps.flatMap(x => Object.values(x.documentos || {}).map(d => ({ ...d, pedido: x.numero })));
+  return `<button class="back" data-a="adminTab" data-t="clientes" style="padding-top:0">← Clientes</button>
+  <div class="stack" style="margin-top:12px"><h2>${esc(p.nome)}</h2>
+  <div class="grid2"><div class="stack">
+    <div class="card flat stack"><h3>Pedidos</h3>${ps.map(x => `<button class="order card flat" data-a="adminPedido" data-uid="${esc(c.id)}" data-id="${esc(x.id)}"><div class="row">${chip(x.status)}<b>${esc(x.numero)}</b><span class="spacer"></span><b>${brl(x.preco)}</b></div><span class="small">${esc(x.servicoNome)} · ${fmtData(x.criadoEm)}</span></button>`).join("") || '<p class="small muted">Nenhum pedido.</p>'}</div>
+    <div class="card flat stack"><h3>Documentos</h3>${docs.map(d => `<div class="file">${ICONS.doc}${linkArq(d)}<span class="small muted">${esc(d.pedido)}</span></div>`).join("") || '<p class="small muted">Nenhum documento.</p>'}</div>
+  </div><div class="stack">
+    <div class="card flat stack"><dl class="kv"><dt>CPF</dt><dd>${esc(p.cpf)}</dd><dt>CNPJ</dt><dd>${esc(p.cnpj || "—")}</dd><dt>Celular</dt><dd>${esc(p.telefone)}</dd><dt>E-mail</dt><dd>${esc(p.email)}</dd><dt>Cadastro</dt><dd>${fmtData(p.criadoEm)}</dd><dt>Consentimento LGPD</dt><dd>${p.consentimento ? "Sim" : "Não"}</dd>${p.exclusaoSolicitadaEm ? `<dt>Exclusão solicitada</dt><dd>${fmtData(p.exclusaoSolicitadaEm)}</dd>` : ""}</dl></div>
+    <div class="card flat stack"><h3>Observações internas</h3>${notas.map(n => `<div class="small"><b>${esc(n.por || "Equipe")}</b> · ${fmtDH(n.em)}<br>${esc(n.texto)}</div>`).join("")}
+      <form class="stack" id="formNotaCli" style="gap:8px"><label for="notaCli" hidden>Observação</label><textarea class="input" id="notaCli" placeholder="Anotação sobre o cliente"></textarea><button class="btn ghost sm" type="submit" style="align-self:flex-start">Salvar observação</button></form></div>
+  </div></div></div>`;
+}
+function aIndicadores() {
+  const todos = todosPedidos(); const reais = todos.filter(p => p.status !== "rascunho");
+  const pagos = reais.filter(p => p.pagamento); const conc = reais.filter(p => p.status === "concluido" && p.concluidoEm && p.pagoEm);
+  const receita = pagos.reduce((a, p) => a + p.pagamento.valor, 0) - pagos.filter(p => p.reembolso).reduce((a, p) => a + p.reembolso.valor, 0);
+  const tempo = conc.length ? conc.reduce((a, p) => a + (new Date(p.concluidoEm) - new Date(p.pagoEm)) / 864e5, 0) / conc.length : 0;
+  const humanos = pagos.filter(p => p.analiseHumana).length;
+  const cancel = reais.filter(p => p.status === "cancelado").length;
+  const clientes = S.clientes.filter(c => c.data.perfil);
+  const recompra = clientes.filter(c => Object.values(c.data.pedidos || {}).filter(p => p.pagamento).length > 1).length;
+  const compradores = clientes.filter(c => Object.values(c.data.pedidos || {}).some(p => p.pagamento)).length;
+  const rank = cfg().servicos.map(s => ({ s, n: pagos.filter(p => p.servico === s.codigo).length })).sort((a, b) => b.n - a.n); const max = Math.max(1, ...rank.map(r => r.n));
+  const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "—";
+  return `<div class="stack">
+    <div class="tiles">
+      <div class="tile"><b>${clientes.length}</b><span>Usuários cadastrados</span></div>
+      <div class="tile"><b>${reais.length}</b><span>Pedidos realizados</span></div>
+      <div class="tile"><b>${pct(pagos.length, todos.length)}</b><span>Conversão (pagos ÷ iniciados, com rascunhos)</span></div>
+      <div class="tile"><b>${brl(receita)}</b><span>Faturamento</span></div>
+      <div class="tile"><b>${brl(pagos.length ? receita / pagos.length : 0)}</b><span>Ticket médio</span></div>
+      <div class="tile ${reais.filter(atrasado).length ? "alert-t" : ""}"><b>${reais.filter(atrasado).length}</b><span>Pedidos em atraso</span></div>
+      <div class="tile"><b>${tempo ? tempo.toFixed(1).replace(".", ",") + " dias" : "—"}</b><span>Tempo médio de execução</span></div>
+      <div class="tile"><b>${pct(pagos.length - humanos, pagos.length)}</b><span>Pedidos sem análise humana obrigatória</span></div>
+      <div class="tile"><b>${pct(recompra, compradores)}</b><span>Taxa de recompra</span></div>
+      <div class="tile"><b>${cancel}</b><span>Cancelamentos</span></div>
+    </div>
+    <div class="card flat stack"><h3>Serviços mais contratados</h3>${rank.map(r => `<div class="bar"><span>${esc(r.s.nome)}</span><i style="width:${Math.max(2, r.n / max * 100)}%" aria-hidden="true"></i><span class="num">${r.n}</span></div>`).join("")}</div>
+    <p class="small muted">Visitantes e custo operacional por pedido entram quando houver analytics e apontamento de horas (próximas fases).</p>
+  </div>`;
+}
+function aAjustes() {
+  const c = cfg();
+  return `<form class="stack" id="formAjustes" novalidate style="max-width:640px"><h2>Ajustes gerais</h2>
+    <div class="card flat stack">
+      <div class="field"><label for="aj_wa">WhatsApp de atendimento (com DDD)</label><span class="help">Aparece no botão “Falar no WhatsApp” dos pedidos.</span><input class="input" id="aj_wa" value="${esc(c.whatsapp)}" placeholder="55 11 90000-0000" inputmode="tel"></div>
+      <div class="field"><label for="aj_email">E-mail de atendimento</label><input class="input" id="aj_email" type="email" value="${esc(c.emailAtendimento || "")}" placeholder="contato@stillogestao.com.br"></div>
+      <div class="field"><label for="aj_eq">Equipe (um nome por linha)</label><textarea class="input" id="aj_eq">${esc((c.equipe || []).join("\n"))}</textarea></div>
+      <div class="field"><label for="aj_lim">Limite anual do MEI (R$)</label><span class="help">${esc(c.limiteNota)}</span><input class="input" id="aj_lim" value="${esc(String(c.limiteAnual).replace(".", ","))}" inputmode="decimal"></div>
+      <label class="switch"><input type="checkbox" id="aj_teste" ${c.ambienteTeste ? "checked" : ""}> Ambiente de teste (pagamentos simulados)</label>
+    </div><button class="btn" type="submit">Salvar ajustes</button>
+    <p class="small muted">Banco de dados: ${Store.mode === "supabase" ? "Supabase (produção)" : "demonstração local (nada é salvo)"}.</p></form>`;
+}
+
+/* ====================== AÇÕES ====================== */
+const A = {
+  home() { if (S.modo === "admin") { S.adminTab = "pedidos"; S.params = {}; render(); } else go("inicio"); },
+  nav(d) { go(d.v); },
+  tema() { temaAtual = TEMAS[temaAtual].prox; aplicarTema(); try { localStorage.setItem("stillo-tema", temaAtual); } catch (e) { } renderTop(); toast("Tema " + TEMAS[temaAtual].nome + "."); },
+  alternarModo() { S.modo = S.modo === "admin" ? "cliente" : "admin"; S.adminTab = "pedidos"; S.view = "inicio"; render(); window.scrollTo(0, 0); },
+  emBreve(d) { modal(`<div class="stack"><h2>${esc(d.m)}</h2><p>Este módulo está em desenvolvimento e ainda não está disponível.</p><button class="btn block" data-a="fecharModal">Ok</button></div>`); },
+  limparBusca() { S.busca = ""; render(); },
+  abrirServico(d) { go("servico", { c: d.c }); },
+  contratar(d) { if (!Store.logado) { try { sessionStorage.setItem("stillo-depois", d.c); } catch (e) { } go("login", { depois: d.c }); return; } if (!S.cadastro || !S.cadastro.perfil) { go("cadastro", { depois: d.c }); return; } iniciarWizard(d.c); },
+  voltarCadastro() { if (S.params.depois) go("servico", { c: S.params.depois }); else go("conta"); },
+  editarCadastro() { go("cadastro", {}); },
+  continuar(d) { const p = findPedido(Store.uid, d.id); if (p) iniciarWizard(p.servico, p); },
+  irPasso(d) { lerWizard(); S.wiz.passo = Number(d.p); render(); window.scrollTo(0, 0); },
+  passoAnterior() { lerWizard(); S.wiz.passo = Math.max(1, S.wiz.passo - 1); render(); window.scrollTo(0, 0); },
+  sairWizard() { lerWizard(); modal(`<div class="stack"><h2>Sair do formulário?</h2><p>Você pode salvar o que já preencheu e continuar depois.</p><button class="btn block" data-a="salvarRascunho">Salvar e sair</button><button class="btn ghost block" data-a="sairSemSalvar">Sair sem salvar</button></div>`); },
+  sairSemSalvar() { fecharModal(); const c = S.wiz && S.wiz.codigo; S.wiz = null; go("servico", { c }); },
+  salvarRascunho() { fecharModal(); salvarRascunho(false); },
+  async removerArquivo(d) {
+    if (S.view === "wizard" && S.wiz) { lerWizard(); delete S.wiz.docs[d.k]; render(); return; }
+  },
+  metodo(d) { S.checkout.metodo = d.m; render(); },
+  async gerarPix() {
+    const c = S.checkout; if (!c || c.gerando) return; c.gerando = true; c.erro = ""; render();
+    try { await Store.api("/api/pix/criar", { pedidoId: c.pid }); await Store.recarregarTudo(); }
+    catch (e) { c.erro = e.message || "Não foi possível gerar o Pix."; }
+    c.gerando = false; render();
+  },
+  async verificarPix() {
+    const c = S.checkout; if (!c) return; toast("Verificando…");
+    try { const r = await Store.api("/api/pix/status?pedido=" + encodeURIComponent(c.pid)); if (r.pago) await Store.recarregarTudo(); else toast("Ainda não identificamos o pagamento. Pode levar alguns segundos."); }
+    catch (e) { toast(e.message); }
+  },
+  loginVoltar() { S.login = { etapa: 1, email: (S.login && S.login.email) || "" }; render(); },
+  async sair() { try { await Store.sb.auth.signOut(); } catch (e) { } location.reload(); },
+  async copiar(d, el) { try { await navigator.clipboard.writeText(d.t); toast("Código copiado."); } catch (e) { toast("Não foi possível copiar. Selecione o código e copie manualmente."); } },
+  async simularPagamento() {
+    const c = S.checkout;
+    if (c.metodo === "cartao") { const n = dig($("#cc_num").value); if (n.length < 13 || !$("#cc_nome").value.trim() || !/^\d{2}\/\d{2}$/.test($("#cc_val").value.trim()) || dig($("#cc_cvv").value).length < 3) { toast("Preencha os dados do cartão de teste."); return; } }
+    const ok = await confirmarPagamento(Store.uid, c.pid, c.metodo); if (ok) { go("sucesso", { id: c.pid }); S.checkout = null; }
+  },
+  pagar(d) { S.checkout = { pid: d.id, metodo: "pix" }; go("checkout"); },
+  async verPedido(d) { go("pedido", { id: d.id }); const p = findPedido(Store.uid, d.id); if (p && p.naoLido) await salvar(() => Store.atualizarCliente(Store.uid, { pedidos: { [d.id]: { naoLido: false } } })); },
+  comprovante(d) {
+    const p = S.modo === "admin" ? findPedido(S.params.uid, d.id) : findPedido(Store.uid, d.id); const cli = S.cadastro && S.cadastro.perfil;
+    modal(`<div class="stack">${comprovanteHTML(p, cli)}<div class="row">${Store.podeBaixar() ? `<button class="btn" data-a="baixarComprovante" data-id="${esc(d.id)}">Baixar</button>` : ""}<button class="btn ghost" data-a="fecharModal">Fechar</button></div></div>`);
+  },
+  async baixarComprovante(d) {
+    const p = findPedido(Store.uid, d.id); const html = `<!DOCTYPE html><html lang="pt-BR"><meta charset="utf-8"><title>Comprovante ${p.numero}</title><body style="font-family:sans-serif;max-width:560px;margin:40px auto">${comprovanteHTML(p, S.cadastro.perfil)}</body></html>`;
+    try { const ok = await Store.baixar("comprovante-" + p.numero + ".html", html); if (!ok) toast("Download indisponível neste modo."); } catch (e) { toast("Download cancelado."); }
+  },
+  async cancelarCliente(d) {
+    const ok = await salvar(() => Store.atualizarCliente(Store.uid, { pedidos: { [d.id]: { status: "cancelado", novoParaStillo: true, historico: { [hkey()]: { em: now(), status: "cancelado", texto: "Pedido cancelado pelo cliente antes do pagamento.", por: "cliente" } } } } }));
+    if (ok) { toast("Pedido cancelado."); render(); }
+  },
+  solicitarCancelamento(d) { modal(`<form class="stack" id="formCancel" data-id="${esc(d.id)}"><h2>Solicitar cancelamento</h2><p class="small muted">Se o serviço ainda não começou, o reembolso é integral. Se já começou, a equipe avalia o que já foi feito.</p><div class="field"><label for="cancelMotivo">Motivo</label><textarea class="input" id="cancelMotivo" required></textarea></div><button class="btn danger block" type="submit">Enviar solicitação</button><button type="button" class="btn ghost block" data-a="fecharModal">Voltar</button></form>`); },
+  verTermos() { modal(termosHTML()); },
+  async pedirExclusao() {
+    const ok = await salvar(() => Store.atualizarCliente(Store.uid, { perfil: { exclusaoSolicitadaEm: now() } }));
+    if (ok) toast("Solicitação registrada. A equipe vai responder em até 15 dias.");
+  },
+  fecharModal(d, el, e) { if (d.fundo && e.target !== el) return; fecharModal(); },
+  /* painel */
+  adminTab(d) { S.adminTab = d.t; S.params = {}; render(); window.scrollTo(0, 0); },
+  async adminPedido(d) { S.adminTab = "pedido"; S.params = { uid: d.uid, id: d.id }; render(); window.scrollTo(0, 0); const p = findPedido(d.uid, d.id); if (p && p.novoParaStillo) await salvar(() => Store.atualizarCliente(d.uid, { pedidos: { [d.id]: { novoParaStillo: false } } })); },
+  adminServico(d) { S.adminTab = "servico"; S.params = { c: d.c }; render(); window.scrollTo(0, 0); },
+  adminCliente(d) { S.adminTab = "cliente"; S.params = { uid: d.uid }; render(); window.scrollTo(0, 0); },
+  async adminSalvarStatus() {
+    const { uid, id } = S.params; const p = findPedido(uid, id); const st = $("#a_status").value; const resp = $("#a_resp").value; const msg = $("#a_msg").value.trim();
+    const patch = { responsavel: resp };
+    let hist = null;
+    if (st !== p.status) { patch.status = st; hist = st; if (st === "concluido") patch.concluidoEm = now(); if (!["aguardando_info", "aguardando_documentos"].includes(st)) patch.pendencia = ""; }
+    if (!hist && !msg && resp === (p.responsavel || "")) { toast("Nada mudou."); return; }
+    if (!hist && !msg) { if (await salvar(() => Store.atualizarCliente(uid, { pedidos: { [id]: patch } }))) toast("Responsável atualizado."); return; }
+    if (await adminAtualizar(uid, id, patch, msg, hist)) toast("Pedido atualizado e cliente avisado.");
+  },
+  async adminConfirmarPgto() { const { uid, id } = S.params; if (await confirmarPagamento(uid, id, "manual", true)) toast("Pagamento confirmado."); },
+  async adminPendencia() {
+    const { uid, id } = S.params; const t = $("#a_pend").value.trim(); if (!t) { toast("Escreva o que o cliente precisa enviar."); return; }
+    if (await adminAtualizar(uid, id, { status: "aguardando_info", pendencia: t }, t, "aguardando_info")) toast("Pedido enviado ao cliente.");
+  },
+  async adminCancelarReembolso() {
+    const { uid, id } = S.params; const p = findPedido(uid, id);
+    if (await adminAtualizar(uid, id, { status: "cancelado", cancelamentoSolicitado: false, reembolso: { situacao: "Pendente", valor: p.pagamento.valor, em: now() } }, "Pedido cancelado. O reembolso de " + brl(p.pagamento.valor) + " será feito pela mesma forma de pagamento.", "cancelado")) toast("Cancelado. Reembolso marcado como pendente.");
+  },
+  async adminReembolsoFeito() { const { uid, id } = S.params; if (await salvar(() => Store.atualizarCliente(uid, { pedidos: { [id]: { reembolso: { situacao: "Realizado", feitoEm: now() } } } }))) toast("Reembolso registrado."); },
+  async salvarCatalogoInicial() { if (await salvar(() => Store.saveConfig(clone(cfg())))) toast("Catálogo salvo no banco."); },
+  async exportarCSV() {
+    const ps = filtraPeriodo(todosPedidos().filter(p => p.pagamento), S.finDe, S.finAte, "pagoEm");
+    const linhas = [["data_pagamento", "pedido", "cliente", "servico", "forma", "valor", "teste", "reembolso"].join(";")].concat(ps.map(p => [fmtData(p.pagoEm), p.numero, p._cliente, p.servicoNome, p.pagamento.metodo, String(p.pagamento.valor).replace(".", ","), p.pagamento.simulado ? "sim" : "nao", p.reembolso ? p.reembolso.situacao : ""].map(x => '"' + String(x).replace(/"/g, '""') + '"').join(";")));
+    try { const ok = await Store.baixar("stillo-mei-pagamentos.csv", "﻿" + linhas.join("\n")); if (!ok) toast("Download indisponível neste modo."); } catch (e) { toast("Download cancelado."); }
+  }
+};
+
+document.addEventListener("click", async e => {
+  const arq = e.target.closest("[data-arq]");
+  if (arq) {
+    e.preventDefault(); const w = window.open("", "_blank");
+    try { const u = await Store.urlArquivo(arq.dataset.arq); if (w) w.location = u; else location.href = u; }
+    catch (x) { if (w) w.close(); toast("Não foi possível abrir o arquivo agora."); }
+    return;
+  }
+  const el = e.target.closest("[data-a]"); if (!el) return;
+  const fn = A[el.dataset.a]; if (!fn) return;
+  if (el.tagName === "A") return;
+  e.preventDefault(); fn(el.dataset, el, e);
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if (t.closest("form") && t.id !== "busca" && t.id !== "buscaCli") S.sujo = true;
+  if (t.id === "busca") { S.busca = t.value; const pos = t.selectionStart; render(); const n = $("#busca"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (x) { } return; }
+  if (t.id === "buscaCli") { S.buscaCli = t.value; const pos = t.selectionStart; render(); const n = $("#buscaCli"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (x) { } return; }
+  if (t.dataset.t === "cnpj") { t.value = maskCNPJ(t.value); }
+  if (t.id === "c_cpf") t.value = maskCPF(t.value);
+  if (t.id === "c_cnpj") t.value = maskCNPJ(t.value);
+  if (t.id === "c_telefone") t.value = maskFone(t.value);
+  if (t.id === "cc_num") t.value = dig(t.value).slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ");
+  if (t.id === "cc_val") t.value = dig(t.value).slice(0, 4).replace(/(\d{2})(\d)/, "$1/$2");
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset.filtro) { S.filtros[t.dataset.filtro] = t.value; render(); return; }
+  if (t.dataset.fin) { S[t.dataset.fin] = t.value; render(); return; }
+  if (t.dataset.t === "money") { const v = parseMoney(t.value); t.value = t.value.trim() === "" ? "" : brl(v); }
+  if (t.dataset.f && S.wiz) {
+    const s = svcByCode(S.wiz.codigo);
+    if (s.campos.some(f => f.mostrarSe && f.mostrarSe.campo === t.dataset.f)) { lerWizard(); render(); }
+  }
+  if (t.dataset.up) { const f = t.files && t.files[0]; const tipo = t.dataset.up, fin = !!t.dataset.final; t.value = ""; processarUpload(f, tipo, fin); }
+});
+document.addEventListener("submit", async e => {
+  const f = e.target; e.preventDefault(); S.sujo = false;
+  if (f.id === "formCadastro") return salvarCadastro(f);
+  if (f.id === "formLogin") {
+    const email = $("#lg_email").value.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast("Confira o e-mail digitado."); return; }
+    const btn = $("button[type=submit]", f); btn.disabled = true;
+    const { error } = await Store.sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin, shouldCreateUser: true } });
+    btn.disabled = false;
+    if (error) { toast(/rate|limit|seconds/i.test(error.message) ? "Aguarde um minuto antes de pedir outro código." : "Não foi possível enviar o código agora."); return; }
+    S.login = { etapa: 2, email }; render(); const c = $("#lg_cod"); if (c) c.focus(); return;
+  }
+  if (f.id === "formCodigo") {
+    const token = dig($("#lg_cod").value);
+    if (token.length < 6) { toast("Digite o código que chegou no seu e-mail."); return; }
+    const btn = $("button[type=submit]", f); btn.disabled = true;
+    const { error } = await Store.sb.auth.verifyOtp({ email: S.login.email, token, type: "email" });
+    if (error) { btn.disabled = false; toast("Código inválido ou vencido. Peça um novo."); return; }
+    location.reload(); return;
+  }
+  if (f.id === "formWizard") return proximoPasso();
+  if (f.id === "formMsg") {
+    const t = $("#msgTxt").value.trim(); if (!t) return; const id = f.dataset.id; const p = findPedido(Store.uid, id);
+    const patch = { novoParaStillo: true, mensagens: { ["m" + Date.now() + uid6()]: { em: now(), de: "cliente", texto: t } } };
+    if (p.status === "aguardando_info") { patch.status = "em_analise"; patch.pendencia = ""; patch.historico = { [hkey()]: { em: now(), status: "em_analise", texto: "Cliente respondeu à solicitação.", por: "cliente" } }; }
+    if (await salvar(() => Store.atualizarCliente(Store.uid, { pedidos: { [id]: patch } }))) toast("Mensagem enviada.");
+  }
+  if (f.id === "formCancel") {
+    const t = $("#cancelMotivo").value.trim(); if (!t) { toast("Conte o motivo do cancelamento."); return; } const id = f.dataset.id;
+    const ok = await salvar(() => Store.atualizarCliente(Store.uid, { pedidos: { [id]: { cancelamentoSolicitado: true, novoParaStillo: true, mensagens: { ["m" + Date.now() + uid6()]: { em: now(), de: "cliente", texto: "Solicito o cancelamento. Motivo: " + t } } } } }));
+    if (ok) { fecharModal(); toast("Solicitação enviada."); }
+  }
+  if (f.id === "formMsgAdmin") { const t = $("#msgAdm").value.trim(); if (!t) return; const { uid, id } = S.params; if (await adminAtualizar(uid, id, {}, t, null)) toast("Mensagem enviada ao cliente."); }
+  if (f.id === "formNota" || f.id === "formNotaCli") {
+    const t = (f.id === "formNota" ? $("#notaTxt") : $("#notaCli")).value.trim(); if (!t) return;
+    const uid = S.params.uid; const nota = { ["n" + Date.now() + uid6()]: { em: now(), texto: t, por: "Equipe Stillo" } };
+    const patch = f.id === "formNota" ? { pedidos: { [S.params.id]: { notas: nota } } } : { notas: nota };
+    if (await salvar(() => Store.atualizarInterno(uid, patch, !!S.interno[uid]))) toast("Observação salva.");
+  }
+  if (f.id === "formServico") {
+    const c = clone(cfg()); const s = c.servicos.find(x => x.codigo === S.params.c); const v = id => $("#s_" + id).value.trim();
+    const preco = parseMoney(v("preco")); const prazo = parseInt(v("prazoDias"), 10);
+    if (!v("nome")) { toast("O serviço precisa de um nome."); return; }
+    if (!(preco >= 0) || !(prazo > 0)) { toast("Confira preço e prazo."); return; }
+    Object.assign(s, { nome: v("nome"), categoria: v("categoria") || s.categoria, resumo: v("resumo"), descricao: v("descricao"), paraQuem: v("paraQuem"), notaPreco: v("notaPreco"), regrasHumano: v("regrasHumano"), preco, prazoDias: prazo, ativo: $("#s_ativo").checked, gratuito: $("#s_gratuito").checked, orcamentoPersonalizado: $("#s_orcamento").checked, analiseHumanaSempre: $("#s_humano").checked });
+    s.incluso = v("incluso").split("\n").map(x => x.trim()).filter(Boolean);
+    const antigos = s.documentos;
+    s.documentos = v("documentos").split("\n").map(x => x.trim()).filter(Boolean).map((linha, i) => { const obrig = /\|\s*obrigat[óo]rio\s*$/i.test(linha); const nome = linha.replace(/\|\s*obrigat[óo]rio\s*$/i, "").trim(); const ant = antigos.find(a => a.nome === nome); return { id: ant ? ant.id : (antigos[i] ? antigos[i].id : "doc" + i), nome, obrigatorio: obrig }; });
+    $$("[data-campo]", f).forEach(el => { const fld = s.campos[+el.dataset.campo]; const k = el.dataset.k; if (k === "obrigatorio") { if (fld.id !== "cnpj") fld.obrigatorio = el.checked; } else if (k === "opcoes") { const ops = el.value.split("\n").map(x => x.trim()).filter(Boolean); if (ops.length) fld.opcoes = ops; } else fld[k] = el.value.trim(); });
+    if (await salvar(() => Store.saveConfig(c))) toast("Serviço salvo.");
+  }
+  if (f.id === "formAjustes") {
+    const c = clone(cfg()); const lim = parseMoney($("#aj_lim").value);
+    if (!(lim > 0)) { toast("Informe um limite válido."); return; }
+    Object.assign(c, { emailAtendimento: $("#aj_email").value.trim(), whatsapp: $("#aj_wa").value.trim(), equipe: $("#aj_eq").value.split("\n").map(x => x.trim()).filter(Boolean), limiteAnual: lim, ambienteTeste: $("#aj_teste").checked });
+    if (await salvar(() => Store.saveConfig(c))) toast("Ajustes salvos.");
+  }
+});
+/* arrastar e soltar arquivos nas áreas de documento */
+document.addEventListener("dragover", e => { const d = e.target.closest && e.target.closest(".drop"); if (!d || !$("input[type=file]", d)) return; e.preventDefault(); d.classList.add("over"); });
+document.addEventListener("dragleave", e => { const d = e.target.closest && e.target.closest(".drop"); if (d) d.classList.remove("over"); });
+document.addEventListener("drop", e => {
+  const d = e.target.closest && e.target.closest(".drop"); if (!d) return; const inp = $("input[type=file]", d); if (!inp) return;
+  e.preventDefault(); d.classList.remove("over"); const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; processarUpload(f, inp.dataset.up, !!inp.dataset.final);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#modal-root").innerHTML) fecharModal(); });
+
+/* ====================== INÍCIO ====================== */
+(async function boot() {
+  await Store.init();
+  let carregou = false;
+  const timer = setTimeout(() => { if (!carregou) { S.erroDados = "Não foi possível carregar os dados agora. Verifique a conexão."; if (!S.config) S.config = clone(DEFAULT_CONFIG); if (S.cadastro === undefined) S.cadastro = null; render(); } }, 10000);
+  const falha = e => { console.error(e); S.erroDados = "A conexão com os dados foi interrompida. Recarregue a página para tentar de novo."; render(); };
+  Store.watchConfig(d => { carregou = true; clearTimeout(timer); S.configSalva = !!d; S.config = d && d.servicos ? d : clone(DEFAULT_CONFIG); if (S.erroDados && d) S.erroDados = ""; renderSeguro(); }, falha);
+  Store.watchMeuCadastro(d => { S.cadastro = d; renderSeguro(); }, falha);
+  try { const dep = sessionStorage.getItem("stillo-depois"); if (Store.logado && dep && !Store.isAdmin) { sessionStorage.removeItem("stillo-depois"); S.view = "servico"; S.params = { c: dep }; } } catch (e) { }
+  if (Store.isAdmin) {
+    S.modo = "admin";
+    Store.watchClientes(list => { S.clientes = list; renderSeguro(); }, falha);
+    Store.watchInterno(list => { S.interno = Object.fromEntries(list.map(x => [x.id, x.data])); renderSeguro(); }, falha);
+  }
+  render();
+})();
+</script>
+</body>
+</html>

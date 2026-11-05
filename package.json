@@ -1,0 +1,10 @@
+{
+  "name": "stillo-mei",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stillo MEI · Resolva Agora (Stillo Gestão Contábil)",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@supabase/supabase-js": "2.45.4"
+  }
+}
